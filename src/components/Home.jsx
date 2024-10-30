@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import { LINK_BOOK_NOW } from "../helpers/links";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,12 +16,15 @@ const Home = () => {
 
       {/* Buttons */}
       <div className="flex space-x-4 items-center justify-center">
-        <button className="bg-[#b68b40] text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-[#a57a36] transition">
+        <a
+          href={LINK_BOOK_NOW}
+          className="bg-[#704415] text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-[#b68b40] transition"
+        >
           Book Now
-        </button>
+        </a>
         <button
           onClick={handleGoBack}
-          className="bg-transparent text-[#b68b40] px-6 py-3 rounded-md text-lg font-semibold border border-[#b68b40] hover:bg-[#b68b40] hover:text-white transition"
+          className="bg-transparent text-[#704415] px-6 py-3 rounded-md text-lg font-semibold border border-[#704415] hover:bg-[#b68b40] hover:text-white transition"
         >
           Go Back
         </button>
