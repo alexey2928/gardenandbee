@@ -51,7 +51,7 @@ const Main = () => {
             } items-center justify-center space-y-4 flex-grow md:space-y-0 md:space-x-4`}
           >
             <img src={logo} alt="logo" className="logo h-auto max-w-full" />
-            <div className="flex space-x-4 items-center justify-center">
+            <div className="flex space-x-4 items-center justify-center text-base md:text-lg lg:text-xl">
               <a
                 href={LINK_BOOK_NOW}
                 className="bg-[#704415] text-white px-5 py-3 rounded-md  font-semibold hover:bg-[#b68b40] transition"
