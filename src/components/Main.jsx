@@ -54,13 +54,13 @@ const Main = () => {
             <div className="flex space-x-4 items-center justify-center">
               <a
                 href={LINK_BOOK_NOW}
-                className="bg-[#704415] text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-[#b68b40] transition"
+                className="bg-[#704415] text-white px-5 py-3 rounded-md  font-semibold hover:bg-[#b68b40] transition"
               >
                 Book Now
               </a>
               <button
                 onClick={handleVisitSite}
-                className="bg-transparent text-[#704415] px-6 py-3 rounded-md text-lg font-semibold border border-[#704415] hover:bg-[#b68b40] hover:text-white transition"
+                className="bg-transparent text-[#704415] px-5 py-3 rounded-md font-semibold border border-[#704415] hover:bg-[#b68b40] hover:text-white transition"
               >
                 Visit Site
               </button>
