@@ -9,12 +9,9 @@ const Home = () => {
     navigate("/");
   };
   return (
-    <div className="bg-slate/40 h-screen flex flex-col items-center justify-center space-y-4">
-      <div>
-        <h1 className="text-3xl font-bold">Garden and bee is coming soon!</h1>
-      </div>
+    <div className="h-screen flex flex-col items-center justify-center space-y-4">
+      <h1 className="text-2xl font-semibold">Garden and bee is coming soon!</h1>
 
-      {/* Buttons */}
       <div className="flex space-x-4 items-center justify-center">
         <a
           href={LINK_BOOK_NOW}
