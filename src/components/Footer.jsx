@@ -51,6 +51,17 @@ const Footer = () => {
           732.759.0070
         </a>
       </div>
+      <div className="text-sm mt-3">
+        <a
+          href={LINK_GOOGLE_MAPS}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Location"
+          className="hover:underline"
+        >
+          10A Main St, Eatontown, NJ, 07724
+        </a>
+      </div>
     </footer>
   );
 };
