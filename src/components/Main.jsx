@@ -44,26 +44,39 @@ const Main = () => {
   return (
     <>
       <div className="flex h-screen">
-        <div className="w-full lg:w-1/2 flex flex-col justify-between">
+        <div className="w-full lg:w-1/2 flex flex-col justify-evenly">
           <div
             className={`flex ${
               isSmallLandscape ? "flex-row" : "flex-col"
-            } items-center justify-center space-y-4 flex-grow md:space-y-0 md:space-x-4`}
+            } items-center justify-center`}
           >
-            <img src={logo} alt="logo" className="logo h-auto max-w-full" />
-            <div className="flex space-x-4 items-center justify-center text-base md:text-lg lg:text-xl">
-              <a
-                href={LINK_BOOK_NOW}
-                className="bg-[#704415] text-white px-5 py-3 rounded-md  font-semibold hover:bg-[#b68b40] transition whitespace-nowrap"
-              >
-                Book Now
-              </a>
-              <button
-                onClick={handleVisitSite}
-                className="bg-transparent text-[#704415] px-5 py-3 rounded-md font-semibold border border-[#704415] hover:bg-[#b68b40] hover:text-white transition whitespace-nowrap"
-              >
-                Visit Site
-              </button>
+            <div
+              className={`flex flex-col items-center ${
+                isSmallLandscape ? "w-1/2" : "w-full mb-10"
+              }`}
+            >
+              <img src={logo} alt="logo" className="logo h-auto max-w-full" />
+
+              <div className="text-[#704415] px-3 pb-3 text-sm font-semibold ">
+                LASHES | BROWS | MAKEUP | FACIALS
+              </div>
+            </div>
+
+            <div>
+              <div className="flex space-x-4 items-center justify-center text-base md:text-lg lg:text-xl">
+                <a
+                  href={LINK_BOOK_NOW}
+                  className="bg-[#704415] text-white px-5 py-3 rounded-md  font-semibold hover:bg-[#b68b40] transition whitespace-nowrap"
+                >
+                  Book Now
+                </a>
+                <button
+                  onClick={handleVisitSite}
+                  className="bg-transparent text-[#704415] px-5 py-3 rounded-md font-semibold border border-[#704415] hover:bg-[#b68b40] hover:text-white transition whitespace-nowrap"
+                >
+                  Visit Site
+                </button>
+              </div>
             </div>
           </div>
           <Footer />
