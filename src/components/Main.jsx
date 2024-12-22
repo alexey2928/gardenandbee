@@ -55,7 +55,11 @@ const Main = () => {
                 isSmallLandscape ? "w-1/2" : "w-full mb-10"
               }`}
             >
-              <img src={logo} alt="logo" className="logo h-auto max-w-full" />
+              <img
+                src={logo}
+                alt="Garden & Bee logo"
+                className="logo h-auto max-w-full"
+              />
 
               <div className="text-[#704415] px-3 pb-3 text-sm font-semibold ">
                 LASHES | BROWS | MAKEUP | FACIALS
