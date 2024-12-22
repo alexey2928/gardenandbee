@@ -57,7 +57,7 @@ const Main = () => {
             >
               <img
                 src={logo}
-                alt="Garden & Bee logo"
+                alt="Garden and Bee logo"
                 className="logo h-auto max-w-full"
               />
 
