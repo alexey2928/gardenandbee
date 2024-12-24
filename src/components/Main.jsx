@@ -57,13 +57,13 @@ const Main = () => {
             >
               <img
                 src={logo}
-                alt="Garden and Bee logo"
+                alt="Garden and Bee"
                 className="logo h-auto max-w-full"
               />
-
-              <div className="text-[#704415] px-3 pb-3 text-sm font-semibold ">
+              <h1 className="hidden">Garden and Bee Beauty Salon</h1>
+              <h1 className="text-[#704415] px-3 pb-3 text-sm font-semibold ">
                 LASHES | BROWS | MAKEUP | FACIALS
-              </div>
+              </h1>
             </div>
 
             <div>
