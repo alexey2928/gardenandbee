@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 import { LINK_BOOK_NOW } from "../helpers/links";
 
-const Home = () => {
+const ComingSoon = () => {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
@@ -30,4 +30,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ComingSoon;
