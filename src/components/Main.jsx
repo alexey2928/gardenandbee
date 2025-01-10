@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-import logo from "../images/logo.png";
-import liliya from "../images/liliya.jpeg";
 import Footer from "./Footer";
 import { LINK_BOOK_NOW } from "../helpers/links";
 
@@ -56,9 +54,10 @@ const Main = () => {
               }`}
             >
               <img
-                src={logo}
+                src={`${process.env.PUBLIC_URL}/images/logo.png`}
                 alt="Garden and Bee"
                 className="logo h-auto max-w-full"
+                loading="eager"
               />
               <h1 className="hidden">Garden and Bee Beauty Salon</h1>
               <h1 className="text-[#704415] px-3 pb-3 text-sm font-semibold ">
@@ -87,9 +86,10 @@ const Main = () => {
         </div>
         <div className="relative hidden lg:block lg:w-1/2 bg-cover bg-center">
           <img
-            src={liliya}
+            src={`${process.env.PUBLIC_URL}/images/liliya.jpeg`}
             alt="Liliya"
             className="w-full h-full object-cover"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-[#F5EFF2]/10 z-10"></div>
         </div>
