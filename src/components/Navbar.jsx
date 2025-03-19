@@ -44,8 +44,6 @@ const Navbar = () => {
         setIsFooter(true);
         setHeight("calc(100vh - 240px)");
       }
-
-      window.scrollTo(0, 0);
     };
 
     updateStyles(); // Initial check on mount
