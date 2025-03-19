@@ -9,12 +9,15 @@ module.exports = {
       },
       colors: {
         primary: "#956C3F",
+        primary_dark: "#704415",
         secondary: "#d4c1a1",
         background: "#f5eff2",
-        primary_dark: "#704415",
+      },
+      fontFamily: {
+        fitz: ["Playfair Display", "serif"],
+        old: ["Old Standard TT", "serif"],
       },
     },
   },
   plugins: [],
 };
-// primary: "#704415",

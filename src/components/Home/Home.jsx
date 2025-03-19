@@ -1,23 +1,19 @@
 import React from "react";
 
-import Section1 from "./Section1";
-import Section2 from "./Section2";
-import ReviewSection from "./ReviewSection";
+import IntroSection from "./IntroSection";
 import ServiceSection from "./ServiceSection";
 import BeautySalonVideoSection from "./BeautySalonVideoSection";
+import ReviewSection from "./ReviewSection";
 import FAQsSection from "./FAQsSection";
-import InstagramSection from "./InstagramSection";
 
 const Home = () => {
   return (
     <>
-      <Section1 />
+      <IntroSection />
       <ServiceSection />
       <BeautySalonVideoSection />
-      <Section2 />
-      {/* <ReviewSection /> */}
+      <ReviewSection />
       <FAQsSection />
-      {/* <InstagramSection /> */}
     </>
   );
 };

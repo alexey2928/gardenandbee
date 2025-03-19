@@ -1,13 +1,13 @@
 import React from "react";
-import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
-
+import { FaFacebook, FaGoogle, FaInstagram, FaTiktok } from "react-icons/fa";
 import {
   LINK_FACEBOOK,
   LINK_GOOGLE_MAPS,
   LINK_INSTAGRAM,
+  LINK_LEAVE_A_REVIEW,
   LINK_TIKTOK,
   PHONE_NUMBER,
-} from "../../helpers/links";
+} from "../../common/links";
 
 const MainFooter = () => {
   return (
@@ -45,6 +45,15 @@ const MainFooter = () => {
           className="hover:text-[#B68B41] transition"
         >
           <FaFacebook size={24} />
+        </a>
+        <a
+          href={LINK_LEAVE_A_REVIEW}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Google Review"
+          className="hover:text-[#B68B41] transition"
+        >
+          <FaGoogle size={24} />
         </a>
       </div>
 

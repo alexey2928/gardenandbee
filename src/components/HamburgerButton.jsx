@@ -1,7 +1,9 @@
+import React from "react";
+
 const HamburgerButton = ({ isOpen, toggle }) => {
   return (
     <button
-      className={`z-50 text-[#704415] focus:outline-none`}
+      className={`z-50 text-primary_dark focus:outline-none`}
       onClick={toggle}
     >
       <svg

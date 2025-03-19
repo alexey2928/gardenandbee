@@ -4,18 +4,19 @@ import {
   LINK_FACEBOOK,
   LINK_GOOGLE_MAPS,
   LINK_INSTAGRAM,
+  LINK_LEAVE_A_REVIEW,
   LINK_TIKTOK,
   PHONE_NUMBER,
-} from "../helpers/links";
+} from "../common/links";
 import { MdEmail, MdPhone } from "react-icons/md";
 import { SiGooglemaps } from "react-icons/si";
-import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
+import { FaFacebook, FaGoogle, FaInstagram, FaTiktok } from "react-icons/fa";
 
 const Footer = () => {
   return (
     <footer className="relative mt-10 overflow-hidden pt-[130px] sm:mt-24 md:pt-[180px] text-white">
       <div className="absolute top-16 flex w-[102%] -translate-y-4 transform justify-end md:left-0 md:w-full">
-        <div className="h-[200px] w-full rotate-[-6deg] transform rounded-tl-[55px] rounded-tr-[35px] bg-secondary md:w-[98%] md:rotate-[-3deg]"></div>
+        <div className="h-[200px] w-full rotate-[-6deg] transform rounded-tl-[55px] rounded-tr-[35px] bg-secondary md:w-[98%] md:rotate-[-2deg]"></div>
       </div>
       <div className="absolute top-16 flex w-[101%] justify-start md:left-0 md:right-0 md:w-full">
         <div className="h-[200px] w-full rotate-[-6deg] transform rounded-tl-[55px] rounded-tr-[35px] bg-primary md:rotate-[-3deg]"></div>
@@ -49,7 +50,7 @@ const Footer = () => {
                   <span>gardenandbee@gmail.com</span>
                 </a>
               </li>
-              <li>
+              <li className="mb-3.5">
                 <a
                   href={LINK_GOOGLE_MAPS}
                   target="_blank"
@@ -61,6 +62,20 @@ const Footer = () => {
                     <SiGooglemaps size={24} />
                   </span>
                   <span>10A Main Street, Eatontown, NJ, 07724</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={LINK_LEAVE_A_REVIEW}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Google Review"
+                  className="flex items-center gap-3 text-lg font-normal"
+                >
+                  <span className="block w-6">
+                    <FaGoogle size={24} />
+                  </span>
+                  <span>Leave a Google Review</span>
                 </a>
               </li>
             </ul>

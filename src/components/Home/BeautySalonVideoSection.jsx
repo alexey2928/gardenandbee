@@ -2,21 +2,23 @@ export default function BeautySalonVideoSection() {
   return (
     <section className="relative mt-10 overflow-hidden py-4 sm:py-5 md:py-12 xl:py-[95px]">
       <div>
-        <video
-          className="absolute top-0 w-full h-full object-cover"
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
-          <source
-            src={`${process.env.PUBLIC_URL}/images/video.mp4`}
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
+        <div>
+          <video
+            className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source
+              src={`${process.env.PUBLIC_URL}/images/video.mp4`}
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
         <div className="flex items-center justify-center">
-          <div className="relative z-10 bg-black max-w-[290px] sm:max-w-[1170px] bg-opacity-40 rounded-[40px] px-5 py-5 backdrop-blur-[5px] sm:py-10 xl:px-0 xl:pb-[90px] xl:pt-[90px] text-center">
+          <div className="relative z-10 bg-black max-w-[290px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[900px] xl:max-w-[1100px] 2xl:max-w-[1400px] bg-opacity-40 rounded-[40px] px-5 py-5 backdrop-blur-[5px] sm:py-10 xl:px-0 xl:pb-[90px] xl:pt-[90px] text-center">
             <h2 className="mb-4 text-[35px] font-semibold leading-[60px] text-white sm:text-5xl xl:text-[60px] xl:leading-[78px]">
               Discover Your Unique Beauty Journey
             </h2>
@@ -29,10 +31,10 @@ export default function BeautySalonVideoSection() {
             <div className="mx-auto mt-9 max-w-[290px] sm:max-w-[1170px]">
               <div className="flex flex-wrap items-center justify-center sm:flex-nowrap">
                 {[
-                  { number: 500, text: "Eyelash Extensions Applied" },
+                  { number: 1500, text: "Eyelash Extensions Applied" },
                   { number: 2000, text: "Beautiful Brows Shaped" },
-                  { number: 250, text: "Makeovers Completed" },
-                  { number: 150, text: "Happy Clients Acknowledged" },
+                  { number: 750, text: "Makeovers Completed" },
+                  { number: 250, text: "Happy Clients Acknowledged" },
                 ].map((item, index) => (
                   <div
                     key={index}

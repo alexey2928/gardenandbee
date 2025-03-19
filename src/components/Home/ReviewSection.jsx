@@ -1,162 +1,195 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
+import { LINK_LEAVE_A_REVIEW } from "../../common/links";
 import { GoArrowLeft, GoArrowRight, GoArrowUpRight } from "react-icons/go";
 import { useSelector } from "react-redux";
-import { selectGoogleReviews } from "../../store/googleReviewsSlice";
-import { LINK_LEAVE_A_REVIEW } from "../../helpers/links";
+import {
+  selectReviews,
+  selectReviewsError,
+} from "../../store/slices/reviewsSlice";
+import { FaUserCircle } from "react-icons/fa";
 
 const ReviewSection = () => {
-  const items = [
-    {
-      src: "https://imagedelivery.net/xaKlCos5cTg_1RWzIu_h-A/8d44dd27-5fb2-4878-15bb-d681c4ca9700/public",
-      title: "Eyelash Extensions",
-    },
-    {
-      src: "https://imagedelivery.net/xaKlCos5cTg_1RWzIu_h-A/f775786a-6e7f-4843-4466-f1b82e09c100/public",
-      title: "Brow Shaping",
-    },
-    {
-      src: "https://imagedelivery.net/xaKlCos5cTg_1RWzIu_h-A/ce3cdc7d-fdd5-4db1-f038-3abc4733ce00/public",
-      title: "Professional Makeup",
-    },
-    {
-      src: "https://imagedelivery.net/xaKlCos5cTg_1RWzIu_h-A/9fa21546-b424-41d8-e60f-f7e287fe0000/public",
-      title: "Rejuvenating Facials",
-    },
-    {
-      src: "https://imagedelivery.net/xaKlCos5cTg_1RWzIu_h-A/6071a5a1-8710-4a97-42ce-6fb6e0147a00/publicContain",
-      title: "Customized Experiences",
-    },
-    {
-      src: "https://imagedelivery.net/xaKlCos5cTg_1RWzIu_h-A/fd10484b-e8e4-40c5-5c2a-f7aa4cb81200/public",
-      title: "Glowing Skin Treatments",
-    },
-    {
-      src: "https://imagedelivery.net/xaKlCos5cTg_1RWzIu_h-A/fd8ce1e0-ec53-4ef7-fb54-8dbfa1b63e00/publicContain",
-      title: "Special Event Makeup",
-    },
-    {
-      src: "https://imagedelivery.net/xaKlCos5cTg_1RWzIu_h-A/84fe34dc-1e57-4461-37ea-145a0a98f100/publicContain",
-      title: "Relaxing Spa Treatments",
-    },
-  ];
-
   const [currentIndex, setCurrentIndex] = useState(0);
-  const googleData = useSelector(selectGoogleReviews);
-  const reviews = googleData["reviews"];
-  const photos = googleData["photos"];
-  console.log("REVIES", reviews);
-  console.log("PHOTOS", photos);
-  const totalItems = reviews?.length;
+  const reviews = useSelector(selectReviews);
+  const error = useSelector(selectReviewsError);
 
-  // Function to move the carousel left
-  const moveLeft = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    } else {
-      setCurrentIndex(totalItems - 1); // Loop to the last item
-    }
+  // Calculate the new index for navigation
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % reviews.length);
   };
 
-  // Function to move the carousel right
-  const moveRight = () => {
-    if (currentIndex < totalItems - 1) {
-      setCurrentIndex(currentIndex + 1);
-    } else {
-      setCurrentIndex(0); // Loop to the first item
-    }
+  const prevSlide = () => {
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + reviews.length) % reviews.length
+    );
   };
 
-  return (
-    <section className="relative z-10 mt-10">
-      <div className="mx-auto max-w-[1570px] sm:px-10 2xl:px-5">
-        <div className="rounded-[30px] bg-secondary px-5 pb-[100px] pt-9 sm:rounded-[50px] sm:p-6 lg:px-9 lg:pb-12 lg:pt-14">
-          <div className="flex flex-col items-center justify-between sm:flex-row">
-            <div className="flex flex-col items-center gap-1.5 sm:flex-row sm:gap-[30px]">
-              <div className="flex items-center justify-center gap-[11px] rounded-[60px] border border-white px-5 text-lg font-medium text-white sm:py-1.5 sm:text-base xl:py-2.5 xl:text-lg">
-                Our Reviews
-              </div>
-              <h4 className="text-[30px] font-semibold text-white sm:text-[22px] md:text-[30px]">
-                Exceptional Beauty Experiences
-              </h4>
-            </div>
-            <a
-              href={LINK_LEAVE_A_REVIEW}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-auto inline-flex h-[50px] items-center justify-between gap-2.5 rounded-full bg-primary p-[5px] pl-[18px] text-lg font-medium text-white sm:mx-0 border border-primary"
-            >
-              <span>Leave a Review</span>
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
-                <GoArrowUpRight size={24} className="text-primary" />
-              </span>
-            </a>
-          </div>
-          <div className="mb-10 mt-5 overflow-hidden sm:my-[30px] md:mb-12 md:mt-10">
-            <div
-              className="flex gap-[15px] transition-transform duration-500 ease-in-out sm:gap-3 lg:gap-4"
-              style={{
-                transform: `translateX(-${currentIndex * 365}px)`, // Move the carousel items based on the current index
-              }}
-            >
-              {photos &&
-                items.map((photo) => (
-                  <div className="relative h-[448px] w-[350px] flex-shrink-0">
-                    <img
-                      src={photo.src}
-                      alt={photo.name || "Photo"}
-                      className="h-full w-full rounded-[35px] object-cover"
-                    />
-                    {reviews &&
-                      reviews.map((review, index) => (
-                        <>
-                          <p></p>
-                          <div className="absolute bottom-0 left-0 w-full rounded-t-none rounded-b-[35px] bg-[#999999] bg-opacity-30 backdrop-blur-[10px] py-[16px] text-center">
-                            {/* absolute bottom-5 left-1/2 mx-auto w-[92%] -translate-x-1/2
-                    rounded-[20px] bg-[#999999] bg-opacity-30 p-4
-                    backdrop-blur-[5px] 2xl:px-6 2xl:py-[29px] */}
-                            <h6
-                              key={index}
-                              className="text-lg font-medium text-white drop-shadow-[0px_4px_4px_rgba(0,0,0,0.25)] lg:text-2xl"
-                            >
-                              {review.authorAttribution.displayName}
-                            </h6>
-                          </div>
-                        </>
-                      ))}
-                  </div>
-                ))}
-            </div>
-
-            <div className="mt-3 items-center justify-between gap-5 sm:flex md:mt-5 md:gap-10">
-              <ul className="flex items-center gap-5">
-                <li>
-                  <button
-                    type="button"
-                    className="flex h-[50px] w-[50px] items-center justify-center rounded-full border border-white"
-                    onClick={moveLeft}
-                  >
-                    <GoArrowLeft size={24} className="text-white" />
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="flex h-[50px] w-[50px] items-center justify-center rounded-full border border-primary bg-white"
-                    onClick={moveRight}
-                  >
-                    <GoArrowRight size={24} className="text-primary" />
-                  </button>
-                </li>
-              </ul>
-              <p className="ml-auto max-w-[760px] text-end text-sm font-normal leading-[22px] text-white md:text-lg md:leading-[30px] mt-2">
-                At Garden and Bee Beauty Salon, our commitment is to provide an
-                exceptional beauty experience tailored to your unique needs,
-                ensuring you look and feel your best in a serene atmosphere.
+  if (error) {
+    <section className="relative mt-10 overflow-hidden">
+      <div className="flex flex-col items-center lg:flex-row ">
+        <div className="relative w-full px-5 text-center sm:px-0 lg:w-[40%] ">
+          <h2 className="mx-auto mb-4 lg:mb-10 text-[35px] font-medium leading-[43px] text-black sm:mx-0 sm:mb-4 sm:max-w-full sm:text-3xl sm:leading-9 xl:mb-6 xl:mt-5 xl:text-4xl xl:leading-[48px] 2xl:text-[45px] 2xl:leading-[60px]">
+            <span>See What Our Clients Say About </span>
+            <span className="text-primary">Garden and Bee.</span>
+          </h2>
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6 xl:flex-nowrap">
+            <div className="w-fit">
+              <p className="text-center text-base font-normal leading-[30px] text-black lg:text-left 2xl:text-lg">
+                Our clients love the personalized care and beauty expertise at
+                Garden and Bee! Read their experiences and share your own. Your
+                feedback helps us continue delivering exceptional beauty
+                services tailored just for you.
               </p>
+              <div className="my-6 flex items-center justify-center">
+                <a
+                  href={LINK_LEAVE_A_REVIEW}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-[60px] items-center justify-center gap-3 rounded-full bg-primary pl-8 pr-2.5 text-lg font-medium text-white"
+                >
+                  Leave a Review
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
+                    <GoArrowUpRight size={24} className="text-primary" />
+                  </span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
-        <div className="absolute left-0 right-0 top-1/2 -z-10 mx-auto h-[103%] w-[95%] max-w-full -translate-y-1/2 rounded-[30px] bg-primary sm:h-[90%] sm:w-full sm:max-w-[590px] sm:rounded-[50px] md:max-w-[750px] lg:max-w-[980px] xl:max-w-[1590px]"></div>
+      </div>
+      <div>
+        <h3 className="text-2xl lg:text-4xl text-primary_dark my-4 lg:mt-20 lg:mb-10 text-center h-10 lg:h-12 w-full">
+          {error}
+        </h3>
+      </div>
+    </section>;
+  }
+
+  return (
+    <section className="relative mt-10 overflow-hidden">
+      <div className="flex flex-col items-center lg:flex-row ">
+        <div className="relative w-full px-5 text-center sm:px-0 lg:w-[40%] ">
+          <h2 className="mx-auto mb-4 lg:mb-10 text-[35px] font-medium leading-[43px] text-black sm:mx-0 sm:mb-4 sm:max-w-full sm:text-3xl sm:leading-9 xl:mb-6 xl:mt-5 xl:text-4xl xl:leading-[48px] 2xl:text-[45px] 2xl:leading-[60px]">
+            <span>See What Our Clients Say About </span>
+            <span className="text-primary">Garden and Bee.</span>
+          </h2>
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6 xl:flex-nowrap">
+            <div className="w-fit">
+              <p className="text-center text-base font-normal leading-[30px] text-black lg:text-left 2xl:text-lg">
+                Our clients love the personalized care and beauty expertise at
+                Garden and Bee! Read their experiences and share your own. Your
+                feedback helps us continue delivering exceptional beauty
+                services tailored just for you.
+              </p>
+              <div className="my-6 flex items-center justify-center">
+                <a
+                  href={LINK_LEAVE_A_REVIEW}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-[60px] items-center justify-center gap-3 rounded-full bg-primary pl-8 pr-2.5 text-lg font-medium text-white"
+                >
+                  Leave a Review
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
+                    <GoArrowUpRight size={24} className="text-primary" />
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-full lg:w-[60%]">
+          <div className="relative">
+            <div className="overflow-hidden rounded-[30px] bg-primary text-white sm:rounded-[35px]">
+              <div
+                className="flex items-center transition-transform duration-500 ease-in-out"
+                style={{
+                  transform: `translateX(-${currentIndex * 100}%)`,
+                }}
+              >
+                {reviews.map((item, index) => (
+                  <div
+                    key={index}
+                    className="relative flex w-full flex-shrink-0 flex-col items-center gap-4 px-5 pb-[35px] pr-5 pt-5 sm:flex-row sm:p-5 sm:pr-[30px] 2xl:gap-[35px]"
+                  >
+                    <div className="w-full sm:w-1/2 2xl:w-[58%]">
+                      <img
+                        src={item.imageUrl ? item.imageUrl : ""}
+                        alt={item.author}
+                        className={`w-full rounded-[25px] object-cover ${
+                          !item.imageUrl ? "hidden" : ""
+                        }`}
+                      />
+
+                      {!item.imageUrl && (
+                        <div className="flex h-[320px] w-full items-center justify-center rounded-[25px] bg-background">
+                          <FaUserCircle
+                            size={120}
+                            className="text-primary_dark"
+                          />
+                        </div>
+                      )}
+                    </div>
+                    <div className="w-full ">
+                      <div className="flex items-center justify-between">
+                        <h2 className="text-[34px] font-medium leading-10 sm:text-2xl sm:leading-8 xl:text-[30px] xl:leading-9 2xl:text-[33px] 2xl:leading-10">
+                          {item.author}
+                        </h2>
+                        <div className="flex justify-center sm:justify-start gap-1 text-xl ">
+                          {Array.from({ length: item.rating }, (_, i) => (
+                            <span key={i}>⭐</span>
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-lg font-normal leading-[30px] sm:my-3 sm:text-sm sm:leading-[26px] xl:my-5 xl:text-base 2xl:text-lg 2xl:leading-[30px] text-white">
+                        {item.text}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="flex justify-end px-8">
+                <h6 className="text-2xl font-medium leading-[30px] text-white">
+                  <span>{currentIndex + 1}</span>
+                  <span>/</span>
+                  <span className="text-[15px] font-normal opacity-50">
+                    {reviews.length}
+                  </span>
+                </h6>
+              </div>
+              <div className="flex w-full items-center justify-center gap-5 mb-4">
+                <ul className="flex items-center justify-center gap-5">
+                  <li>
+                    <button
+                      className="flex h-[50px] w-[50px] items-center justify-center rounded-full border border-white"
+                      onClick={prevSlide}
+                    >
+                      <GoArrowLeft size={24} className="text-white" />
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className="flex h-[50px] w-[50px] items-center justify-center rounded-full border border-primary bg-white"
+                      onClick={nextSlide}
+                    >
+                      <GoArrowRight size={24} className="text-primary" />
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Carousel Navigation */}
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute left-[68px] top-0 hidden sm:block">
+        <img
+          src="https://imagedelivery.net/xaKlCos5cTg_1RWzIu_h-A/a1c6e264-b883-47da-7a61-401552d62a00/publicContain"
+          alt=""
+        />
       </div>
     </section>
   );

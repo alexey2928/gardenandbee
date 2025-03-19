@@ -1,14 +1,56 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { MdEvent } from "react-icons/md";
-import { LINK_BOOK_NOW } from "../helpers/links";
-import { PRIMARY_BUTTON } from "../helpers/styles";
+import { LINK_BOOK_NOW } from "../common/links";
+import { PRIMARY_BUTTON } from "../common/styles";
 import HamburgerButton from "./HamburgerButton";
+import HamburgerMenu from "./HamburgerMenu";
+import Navlink from "../common/Navlink";
 
-function Navbar() {
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isFooter, setIsFooter] = useState(false);
+  const [height, setHeight] = useState("auto");
+
+  const handleHamburgerClick = () => {
+    setIsOpen(!isOpen);
+    window.scrollTo(0, 0);
+  };
+
+  useEffect(() => {
+    if (isOpen && window.innerWidth < 1024 && window.innerHeight > 600) {
+      document.body.style.overflow = "hidden";
+      setIsFooter(true);
+      setHeight("calc(100vh - 240px)");
+    } else {
+      document.body.style.overflow = "";
+      setIsFooter(false);
+      setHeight("auto");
+    }
+
+    const handleResize = () => {
+      if (
+        window.innerWidth >= 1024 ||
+        (window.innerWidth < 1024 && window.innerHeight < 600)
+      ) {
+        document.body.style.overflow = "";
+        setIsFooter(false);
+        setHeight("auto");
+        window.scrollTo(0, 0);
+      } else {
+        document.body.style.overflow = "hidden";
+        setIsFooter(true);
+        setHeight("calc(100vh - 240px)");
+        window.scrollTo(0, 0);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isOpen]);
+
   return (
     <>
-      <header className="bg-transparent w-full max-h-40 bg-cover flex items-center justify-start ">
+      <header className="bg-transparent w-full max-h-40 bg-cover flex items-center justify-start">
         <div className="max-w-xl">
           <img
             src={`${process.env.PUBLIC_URL}/images/text.png`}
@@ -18,34 +60,27 @@ function Navbar() {
           <h1 className="hidden">Garden and Bee Beauty Salon</h1>
         </div>
       </header>
-      <header className="sticky top-0 h-20 w-full flex items-center justify-between px-[5%] py-3 z-[100] bg-background">
+      <header className="sticky top-0 h-20 w-full flex items-center justify-between py-3 z-[100] bg-background">
         <div className="hidden lg:flex">
           <ul className="flex items-center justify-center xl:text-xl text-primary_dark">
             <li className="mr-2 xl:mr-4">
-              <Link to="/home" className="cursor-pointer">
-                HOME
-              </Link>
+              <Navlink url="home" name="HOME" />
             </li>
             <li className="mx-2 xl:mx-4">
-              <Link to="/services" className="cursor-pointer">
-                SERVICES
-              </Link>
+              <Navlink url="services" name="SERVICES" />
             </li>
             <li className="mx-2 xl:mx-4">
-              <Link to="/gallery" className="cursor-pointer">
-                GALLERY
-              </Link>
+              <Navlink url="gallery" name="GALLERY" />
             </li>
             <li className="ml-2 xl:ml-4">
-              <Link to="/about" className="cursor-pointer">
-                ABOUT US
-              </Link>
+              <Navlink url="about" name="ABOUT US" />
             </li>
           </ul>
         </div>
-        <div className="lg:hidden">
-          <HamburgerButton />
+        <div className="lg:hidden" onClick={handleHamburgerClick}>
+          <HamburgerButton isOpen={isOpen} />
         </div>
+
         <div className="absolute left-[50%] translate-x-[-50%]">
           <img
             src={`${process.env.PUBLIC_URL}/images/icon.png`}
@@ -74,8 +109,16 @@ function Navbar() {
           </a>
         </div>
       </header>
+      <div className="lg:hidden">
+        <HamburgerMenu
+          isOpen={isOpen}
+          handleHamburgerClick={handleHamburgerClick}
+          isFooter={isFooter}
+          height={height}
+        />
+      </div>
     </>
   );
-}
+};
 
 export default Navbar;

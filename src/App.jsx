@@ -1,21 +1,36 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Navigate, Route, Routes } from "react-router";
 import Main from "./components/Main/Main";
-import ComingSoon from "./components/ComingSoon";
 import Home from "./components/Home/Home";
-import { fetchGoogleReviews } from "./services/fetchGoogleReviews";
 import Services from "./components/Services";
 import AboutUs from "./components/AboutUs";
 import Gallery from "./components/Gallery";
 import Layout from "./components/Layout";
+import { useDispatch } from "react-redux";
+import { fetchFaqs } from "./services/fetchFaqs";
+import { fetchReviews } from "./services/fetchReviews";
+import { fetchServices } from "./services/fetchServices";
+import { fetchGallery } from "./services/fetchGallery";
+import { fetchTeam } from "./services/fetchTeam";
 
 const App = () => {
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(fetchGoogleReviews());
+    dispatch(fetchFaqs());
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchReviews());
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchServices());
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchGallery());
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchTeam());
+  }, [dispatch]);
+
   return (
     <>
       <Routes>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { LINK_BOOK_NOW } from "../../helpers/links";
-import { PRIMARY_BUTTON, SECONDARY_BUTTON } from "../../helpers/styles";
+import { LINK_BOOK_NOW } from "../../common/links";
+import { PRIMARY_BUTTON, SECONDARY_BUTTON } from "../../common/styles";
 import MainFooter from "./MainFooter";
 
 const Main = () => {
@@ -85,12 +85,12 @@ const Main = () => {
         </div>
         <div className="relative hidden lg:block lg:w-1/2 bg-cover bg-center">
           <img
-            src={`${process.env.PUBLIC_URL}/images/liliya.jpeg`}
+            src="https://firebasestorage.googleapis.com/v0/b/garden-and-bee.firebasestorage.app/o/liliya.jpg?alt=media&token=49aeae4a-03b1-454c-b814-eea8fc313f84"
             alt="Liliya"
             className="w-full h-full object-cover"
             loading="eager"
           />
-          <div className="absolute inset-0 bg-[#F5EFF2]/10 z-10"></div>
+          <div className="absolute inset-0 bg-background/10 z-10"></div>
         </div>
       </div>
     </>
