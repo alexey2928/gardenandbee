@@ -17,32 +17,38 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (isOpen && window.innerWidth < 1024 && window.innerHeight > 600) {
-      document.body.style.overflow = "hidden";
-      setIsFooter(true);
-      setHeight("calc(100vh - 240px)");
-    } else {
-      document.body.style.overflow = "";
-      setIsFooter(false);
-      setHeight("auto");
-    }
+    const updateStyles = () => {
+      const isMobile = window.innerWidth < 1024;
+      const isTallEnough = window.innerHeight > 600;
 
-    const handleResize = () => {
-      if (
-        window.innerWidth >= 1024 ||
-        (window.innerWidth < 1024 && window.innerHeight < 600)
-      ) {
-        document.body.style.overflow = "";
-        setIsFooter(false);
-        setHeight("auto");
-        window.scrollTo(0, 0);
-      } else {
+      if (isOpen && isMobile && isTallEnough) {
         document.body.style.overflow = "hidden";
         setIsFooter(true);
         setHeight("calc(100vh - 240px)");
-        window.scrollTo(0, 0);
+      } else {
+        document.body.style.overflow = "";
+        setIsFooter(false);
+        setHeight("auto");
       }
     };
+
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 1024;
+      const isTooShort = window.innerHeight < 600;
+
+      if (!isMobile || isTooShort) {
+        document.body.style.overflow = "";
+        setIsFooter(false);
+        setHeight("auto");
+      } else {
+        setIsFooter(true);
+        setHeight("calc(100vh - 240px)");
+      }
+
+      window.scrollTo(0, 0);
+    };
+
+    updateStyles(); // Initial check on mount
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
