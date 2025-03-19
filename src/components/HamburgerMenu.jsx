@@ -11,8 +11,8 @@ const HamburgerMenu = ({ isOpen, handleHamburgerClick, isFooter, height }) => {
       }
       style={{ height: height }}
     >
-      <div className="flex flex-col items-center h-full text-2xl text-primary_dark gap-8">
-        <span onClick={handleHamburgerClick} className="mt-8">
+      <div className="flex flex-col items-center h-full text-xl text-primary_dark gap-6">
+        <span onClick={handleHamburgerClick} className="mt-6">
           <Navlink url="home" name="HOME" />
         </span>
         <span onClick={handleHamburgerClick}>
@@ -26,7 +26,7 @@ const HamburgerMenu = ({ isOpen, handleHamburgerClick, isFooter, height }) => {
         </span>
       </div>
       {isFooter && (
-        <div>
+        <div className="mb-20">
           <MainFooter />
         </div>
       )}
