@@ -103,10 +103,7 @@ const ServicesPage = () => {
                             )}
                           </div>
                           <div className="flex gap-4 px-4 text-right w-[30%] md:w-auto">
-                            <span className="text-base">
-                              <span className="text-primary">from </span>
-                              {service.price}
-                            </span>
+                            <span className="text-base">{service.price}</span>
                             <span className="text-gray-500 text-base">
                               {service.duration}
                             </span>
