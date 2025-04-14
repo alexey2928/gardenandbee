@@ -103,7 +103,7 @@ const ReviewSection = () => {
           <div className="relative">
             <div className="overflow-hidden rounded-[30px] bg-primary text-white sm:rounded-[35px]">
               <div
-                className="flex items-center transition-transform duration-500 ease-in-out"
+                className="flex transition-transform duration-500 ease-in-out"
                 style={{
                   transform: `translateX(-${currentIndex * 100}%)`,
                 }}
@@ -111,40 +111,44 @@ const ReviewSection = () => {
                 {reviews.map((item, index) => (
                   <div
                     key={index}
-                    className="relative flex w-full flex-shrink-0 flex-col items-center gap-4 px-5 pb-[35px] pr-5 pt-5 sm:flex-row sm:p-5 sm:pr-[30px] 2xl:gap-[35px]"
+                    className="relative w-full flex flex-shrink-0 flex-row lg:flex-col gap-4 px-5 pr-5 pt-5 sm:flex-row sm:p-5 sm:pr-[30px] 2xl:gap-[35px]"
                   >
-                    <div className="w-full sm:w-1/2 2xl:w-[58%]">
-                      <img
-                        src={item.imageUrl ? item.imageUrl : ""}
-                        alt={item.author}
-                        className={`w-full rounded-[25px] object-cover ${
-                          !item.imageUrl ? "hidden" : ""
-                        }`}
-                      />
-
-                      {!item.imageUrl && (
-                        <div className="flex h-[320px] w-full items-center justify-center rounded-[25px] bg-background">
-                          <FaUserCircle
-                            size={120}
-                            className="text-primary_dark"
-                          />
-                        </div>
-                      )}
-                    </div>
-                    <div className="w-full ">
+                    <div className="w-full flex flex-col gap-2">
                       <div className="flex items-center justify-between">
-                        <h2 className="text-[34px] font-medium leading-10 sm:text-2xl sm:leading-8 xl:text-[30px] xl:leading-9 2xl:text-[33px] 2xl:leading-10">
-                          {item.author}
-                        </h2>
-                        <div className="flex justify-center sm:justify-start gap-1 text-xl ">
-                          {Array.from({ length: item.rating }, (_, i) => (
-                            <span key={i}>⭐</span>
-                          ))}
+                        <div className="w-full">
+                          <img
+                            src={item.imageUrl ? item.imageUrl : ""}
+                            alt={item.author}
+                            className={`w-24 h-24 lg:w-[320px] lg:h-[320px] rounded-full lg:rounded-[25px]  object-cover ${
+                              !item.imageUrl ? "hidden" : ""
+                            }`}
+                          />
+
+                          {!item.imageUrl && (
+                            <div className="flex w-24 h-24 lg:w-[320px] lg:h-[320px]  items-center justify-center rounded-[25px] bg-background">
+                              <FaUserCircle
+                                size={120}
+                                className="text-primary_dark"
+                              />
+                            </div>
+                          )}
+                        </div>
+                        <div className="w-full flex flex-col items-end justify-end">
+                          <h2 className="text-[24px] lg:text-[34px] font-medium leading-10 sm:text-2xl sm:leading-8 xl:text-[30px] xl:leading-9 2xl:text-[33px] 2xl:leading-10 text-end">
+                            {item.author}
+                          </h2>
+                          <div className="flex gap-1 text-xl ">
+                            {Array.from({ length: item.rating }, (_, i) => (
+                              <span key={i}>⭐</span>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                      <p className="text-lg font-normal leading-[30px] sm:my-3 sm:text-sm sm:leading-[26px] xl:my-5 xl:text-base 2xl:text-lg 2xl:leading-[30px] text-white">
-                        {item.text}
-                      </p>
+                      <div className="h-80 overflow-y-auto lg:h-auto">
+                        <p className="text-lg font-normal leading-[30px] sm:my-3 sm:text-sm sm:leading-[26px] xl:my-5 xl:text-base 2xl:text-lg 2xl:leading-[30px] text-white">
+                          {item.text}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 ))}
