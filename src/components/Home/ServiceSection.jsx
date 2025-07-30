@@ -72,7 +72,14 @@ const ServiceSection = () => {
       link: LINK_BOOK_NOW,
     },
   ];
-
+  const lineServices = [
+    "Lash Extensions",
+    "Lash Lifting and Coloring",
+    "Brow Services",
+    "Facial Treatments",
+    "Makeup Services",
+    "Hair Removal",
+  ];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const moveLeft = () => {
@@ -93,33 +100,19 @@ const ServiceSection = () => {
 
   return (
     <section className="relative z-10 mt-10">
-      <ul className="hidden lg:flex w-[1350px]  items-center gap-2.5 pl-5 sm:w-auto sm:pl-0 lg:gap-4">
-        <li>
-          <div className="flex h-10 items-center justify-center rounded-full border border-primary px-[25px] text-base font-medium text-primary sm:px-2.5 md:px-5 lg:h-[50px] lg:px-6 xl:px-11 xl:text-lg">
-            Eyelash Extensions
-          </div>
-        </li>
-        <li>
-          <div className="flex h-10 items-center justify-center rounded-full border border-primary px-[25px] text-base font-medium text-primary sm:px-2.5 md:px-5 lg:h-[50px] lg:px-6 xl:px-11 xl:text-lg">
-            Brow Shaping
-          </div>
-        </li>
-        <li>
-          <div className="flex h-10 items-center justify-center rounded-full border border-primary px-[25px] text-base font-medium text-primary sm:px-2.5 md:px-5 lg:h-[50px] lg:px-6 xl:px-11 xl:text-lg">
-            Professional Makeup
-          </div>
-        </li>
-        <li>
-          <div className="flex h-10 items-center justify-center rounded-full border border-primary px-[25px] text-base font-medium text-primary sm:px-2.5 md:px-5 lg:h-[50px] lg:px-6 xl:px-11 xl:text-lg">
-            Rejuvenating Facials
-          </div>
-        </li>
-        <li>
-          <div className="flex h-10 items-center justify-center rounded-full border border-primary px-[25px] text-base font-medium text-primary sm:px-2.5 md:px-5 lg:h-[50px] lg:px-6 xl:px-11 xl:text-lg">
-            Personalized Care
-          </div>
-        </li>
-      </ul>
+      <div className="overflow-hidden w-full my-4">
+        <ul className="flex w-max gap-4 animate-slide hover:animation-paused">
+          {[...lineServices, ...lineServices, ...lineServices].map(
+            (service, index) => (
+              <li key={index}>
+                <div className="flex h-10 items-center justify-center rounded-full border border-primary px-6 text-base font-medium text-primary whitespace-nowrap">
+                  {service}
+                </div>
+              </li>
+            )
+          )}
+        </ul>
+      </div>
       {/* Title & Buttons */}
       <div className="rounded-[30px] bg-secondary px-5 pb-[100px] pt-9 md:hidden">
         <div className="flex flex-col items-center justify-between sm:flex-row">

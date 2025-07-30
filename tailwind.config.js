@@ -17,7 +17,27 @@ module.exports = {
         fitz: ["Playfair Display", "serif"],
         old: ["Old Standard TT", "serif"],
       },
+      keyframes: {
+        slide: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+      },
+      animation: {
+        slide: "slide 60s linear infinite",
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities(
+        {
+          ".animation-paused": {
+            animationPlayState: "paused",
+          },
+        },
+        ["responsive", "hover"]
+      );
+    },
+  ],
 };
