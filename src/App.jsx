@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import Main from "./components/Main/Main";
 import Home from "./components/Home/Home";
-import Services from "./components/Services";
+import Services from "./components/ServicePage/Services";
 import AboutUs from "./components/AboutUs";
 import Gallery from "./components/Gallery";
 import Layout from "./components/Layout";
