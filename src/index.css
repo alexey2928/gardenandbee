@@ -61,3 +61,8 @@ code {
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+.print-a4 {
+  width: 794px; /* A4 width at 96dpi */
+  min-height: 1123px;
+  background: white;
+}
