@@ -1,91 +1,104 @@
-import { DevTool } from "@hookform/devtools";
-import React, { useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import {
+  formatPhoneNumber,
+  REGEX_EMAIL,
+  REGEX_PHONE,
+  trimData,
+} from "../FormFunctions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  savePageData,
+  selectEyelashExtensionForm,
+} from "../../../store/slices/formsSlice";
+import FormHeader from "../../../common/FormHeader";
+import FormNavButtons from "../../../common/FormNavButtons";
 
-const Page1 = () => {
-  const formRef = useRef(null);
-  const printRef = useRef(null);
+const Page1 = ({ currentStep, goToNextPage }) => {
+  const dispatch = useDispatch();
+  const formData = useSelector(selectEyelashExtensionForm);
+  const page1Data = formData.page1;
 
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
-    setError,
-    clearErrors,
-    reset,
-  } = useForm();
+    setValue,
+    watch,
+  } = useForm({
+    defaultValues: page1Data || {},
+  });
 
-  const [isPDF, setIsPDF] = useState(false);
+  const allValues = watch();
+  const watchLashesBefore = watch("lashesBefore");
+  const watchUseOfProducts = watch("useofProducts");
+  const watchProducts = watch("products");
 
-  const REGEX_EMAIL = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-  const REGEX_PHONE = /^[0-9]{10}$/; // simple US 10-digit pattern
+  useEffect(() => {
+    const clearIf = (condition, ...fields) => {
+      if (condition) fields.forEach((f) => setValue(f, ""));
+    };
 
-  const formatPhoneNumber = (value) => {
-    if (!value) return "";
-    // Remove all non-digit characters
-    const digits = value.replace(/\D/g, "");
-    // Match US phone pattern
-    const match = digits.match(/^(\d{0,3})(\d{0,3})(\d{0,4})$/);
-    if (!match) return value;
-    let formatted = "";
-    if (match[1]) {
-      formatted = `(${match[1]}`;
-    }
-    if (match[2]) {
-      formatted += `) ${match[2]}`;
-    }
-    if (match[3]) {
-      formatted += `-${match[3]}`;
-    }
-    return formatted;
-  };
+    clearIf(watchLashesBefore !== "Yes", "whereApplied");
+    clearIf(watchUseOfProducts !== "Yes", "products", "otherProduct");
+    clearIf(watchProducts !== "Other", "otherProduct");
+  }, [watchLashesBefore, watchUseOfProducts, watchProducts, setValue]);
 
-  const handleNext = () => {
-    console.log("PAGE 1");
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      dispatch(
+        savePageData({
+          formName: "eyelashExtensionForm",
+          page: "page1",
+          data: trimData(allValues),
+        })
+      );
+    }, 200);
+    return () => clearTimeout(timeout);
+  }, [allValues, dispatch]);
+
+  const onSubmit = (data) => {
+    const trimmedData = trimData(data);
+    dispatch(
+      savePageData({
+        formName: "eyelashExtensionForm",
+        page: "page1",
+        data: trimmedData,
+      })
+    );
+    goToNextPage();
   };
 
   return (
-    <div className="max-w-5xl my-6 lg:my-10 mx-auto px-6 pt-2 pb-6 bg-white rounded shadow">
-      <DevTool control={control} />
-      <form ref={formRef} onSubmit={handleSubmit(handleNext)} noValidate>
-        <div
-          ref={printRef}
-          className={`${isPDF ? "print-a4 space-y-4" : "space-y-4"}`}
-        >
-          {/* Logo */}
-          <div className={isPDF ? "flex justify-center" : "hidden"}>
-            <img
-              src={`${process.env.PUBLIC_URL}/images/logo.png`}
-              alt="Garden & Bee"
-              className="h-36"
-            />
-          </div>
+    <div className="max-w-5xl mx-auto bg-white rounded-b-2xl shadow">
+      {/* Header */}
+      <FormHeader
+        title="EYELASH EXTENSION"
+        pageName="Personal Information + Lash History"
+      />
 
-          {/* Header */}
-          <div className="flex flex-col items-center">
-            <h2 className="text-center text-[35px] font-medium leading-normal text-black sm:text-4xl sm:leading-[78px] lg:text-5xl">
-              EYELASH EXTENSION
-            </h2>
-            <span className="text-primary italic text-xl">
-              Personal Information + Lash History
-            </span>
-          </div>
-
+      <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
+        <div className="p-4">
           {/* Inputs */}
-          {!isPDF && (
-            <div className="space-y-4">
+          <>
+            <div className="space-y-2">
+              {/* First + Last Name */}
               <div className="flex flex-col md:flex-row gap-3">
                 <div className="flex-1">
+                  <label htmlFor="firstName">First Name</label>
                   <input
                     id="firstName"
                     type="text"
-                    placeholder="First Name"
                     className={`w-full p-2 border rounded ${
                       errors.firstName && "border-red-500"
                     }`}
                     {...register("firstName", {
                       required: "First Name is required.",
+                      maxLength: {
+                        value: 50,
+                        message: "First Name cannot exceed 50 characters",
+                      },
                     })}
                   />
                   {errors.firstName && (
@@ -95,15 +108,19 @@ const Page1 = () => {
                   )}
                 </div>
                 <div className="flex-1">
+                  <label htmlFor="lastName">Last Name</label>
                   <input
                     id="lastName"
                     type="text"
-                    placeholder="Last Name"
                     className={`w-full p-2 border rounded ${
                       errors.lastName && "border-red-500"
                     }`}
                     {...register("lastName", {
                       required: "Last Name is required.",
+                      maxLength: {
+                        value: 50,
+                        message: "Last Name cannot exceed 50 characters",
+                      },
                     })}
                   />
                   {errors.lastName && (
@@ -113,15 +130,99 @@ const Page1 = () => {
                   )}
                 </div>
               </div>
+
+              {/* Date of Birth */}
               <div>
+                <label htmlFor="dateOfBirth">Date of Birth</label>
+                <input
+                  id="dateOfBirth"
+                  type="date"
+                  className={`w-full p-2 border rounded ${
+                    errors.dateOfBirth && "border-red-500"
+                  }`}
+                  min="1900-01-01"
+                  max={
+                    new Date(Date.now() - 86400000).toISOString().split("T")[0]
+                  } // yesterday
+                  {...register("dateOfBirth", {
+                    required: "Date of Birth is required.",
+                    validate: (value) => {
+                      const date = new Date(value);
+                      const min = new Date("1900-01-01");
+                      const max = new Date(Date.now() - 86400000); // yesterday
+                      if (isNaN(date)) return "Invalid date.";
+                      if (date < min) return "Date must be after Jan 1, 1900.";
+                      if (date > max)
+                        return "Date cannot be today or in the future.";
+                      return true;
+                    },
+                  })}
+                />
+                {errors.dateOfBirth && (
+                  <p className="text-red-500 text-sm">
+                    {errors.dateOfBirth.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Gender */}
+              <div>
+                <p>Gender</p>
+                <div className="flex space-x-4">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="Female"
+                      {...register("gender", {
+                        required: "Please select your gender.",
+                      })}
+                    />
+                    <span>Female</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="Male"
+                      {...register("gender", {
+                        required: "Please select your gender.",
+                      })}
+                    />
+                    <span>Male</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="Other"
+                      {...register("gender", {
+                        required: "Please select your gender.",
+                      })}
+                    />
+                    <span>Other</span>
+                  </label>
+                </div>
+                {errors.gender && (
+                  <p className="text-red-500 text-sm">
+                    {errors.gender.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Address */}
+              <div>
+                <label htmlFor="address">Address</label>
                 <input
                   id="address"
                   type="text"
-                  placeholder="Address"
+                  placeholder="(optional)"
                   className={`w-full p-2 border rounded ${
                     errors.address && "border-red-500"
                   }`}
-                  {...register("address")}
+                  {...register("address", {
+                    maxLength: {
+                      value: 100,
+                      message: "Address cannot exceed 100 characters",
+                    },
+                  })}
                 />
                 {errors.address && (
                   <p className="text-red-500 text-sm">
@@ -129,16 +230,24 @@ const Page1 = () => {
                   </p>
                 )}
               </div>
+
+              {/* City / State / Zip */}
               <div className="flex flex-col md:flex-row gap-3">
                 <div className="flex-1">
+                  <label htmlFor="city">City</label>
                   <input
                     id="city"
                     type="text"
-                    placeholder="City"
+                    placeholder="(optional)"
                     className={`w-full p-2 border rounded ${
                       errors.city && "border-red-500"
                     }`}
-                    {...register("city")}
+                    {...register("city", {
+                      maxLength: {
+                        value: 50,
+                        message: "City cannot exceed 50 characters",
+                      },
+                    })}
                   />
                   {errors.city && (
                     <p className="text-red-500 text-sm">
@@ -147,14 +256,20 @@ const Page1 = () => {
                   )}
                 </div>
                 <div className="flex-1">
+                  <label htmlFor="state">State</label>
                   <input
                     id="state"
                     type="text"
-                    placeholder="State"
+                    placeholder="(optional)"
                     className={`w-full p-2 border rounded ${
                       errors.state && "border-red-500"
                     }`}
-                    {...register("state")}
+                    {...register("state", {
+                      maxLength: {
+                        value: 2,
+                        message: "State cannot exceed 2 characters",
+                      },
+                    })}
                   />
                   {errors.state && (
                     <p className="text-red-500 text-sm">
@@ -163,14 +278,20 @@ const Page1 = () => {
                   )}
                 </div>
                 <div className="flex-1">
+                  <label htmlFor="zipCode">Zip Code</label>
                   <input
                     id="zipCode"
                     type="text"
-                    placeholder="Zip Code"
+                    placeholder="(optional)"
                     className={`w-full p-2 border rounded ${
                       errors.zipCode && "border-red-500"
                     }`}
-                    {...register("zipCode")}
+                    {...register("zipCode", {
+                      maxLength: {
+                        value: 5,
+                        message: "Zip Code cannot exceed 5 digits",
+                      },
+                    })}
                   />
                   {errors.zipCode && (
                     <p className="text-red-500 text-sm">
@@ -179,12 +300,14 @@ const Page1 = () => {
                   )}
                 </div>
               </div>
+
+              {/* Email + Phone */}
               <div className="flex flex-col md:flex-row gap-3">
                 <div className="flex-1">
+                  <label htmlFor="email">Email</label>
                   <input
                     id="email"
                     type="email"
-                    placeholder="Email"
                     className={`w-full p-2 border rounded ${
                       errors.email && "border-red-500"
                     }`}
@@ -193,6 +316,10 @@ const Page1 = () => {
                       pattern: {
                         value: REGEX_EMAIL,
                         message: "Invalid email format.",
+                      },
+                      maxLength: {
+                        value: 100,
+                        message: "Email cannot exceed 0 characters",
                       },
                     })}
                   />
@@ -210,15 +337,16 @@ const Page1 = () => {
                       required: "Phone number is required.",
                       pattern: {
                         value: REGEX_PHONE,
-                        message: "Phone must be 10 digits.",
+                        message: "Phone number must be 10 digits.",
                       },
                     }}
                     render={({ field }) => (
                       <div>
+                        <label htmlFor="phone">Phone Number</label>
                         <input
                           id="phone"
                           type="text"
-                          placeholder="Phone (10 digits)"
+                          placeholder="(10 digits)"
                           className={`w-full p-2 border rounded ${
                             errors.phone && "border-red-500"
                           }`}
@@ -238,9 +366,234 @@ const Page1 = () => {
                   />
                 </div>
               </div>
+
+              {/* Heard */}
+              <div>
+                <label htmlFor="heard">How did you hear about us?</label>
+                <input
+                  id="heard"
+                  type="text"
+                  className={`w-full p-2 border rounded ${
+                    errors.heard && "border-red-500"
+                  }`}
+                  {...register("heard", {
+                    maxLength: {
+                      value: 100,
+                      message: "This field cannot exceed 100 characters",
+                    },
+                  })}
+                />
+                {errors.heard && (
+                  <p className="text-red-500 text-sm">{errors.heard.message}</p>
+                )}
+              </div>
+
+              {/* Photo consent */}
+              <div>
+                <p>
+                  Are you comfortable with us taking and sharing pictures of
+                  your service results on our social media or website?
+                </p>
+                <div className="flex space-x-4">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="Yes"
+                      {...register("photoConsent", {
+                        required: "Please select an option.",
+                      })}
+                    />
+                    <span>Yes</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="No"
+                      {...register("photoConsent", {
+                        required: "Please select an option.",
+                      })}
+                    />
+                    <span>No</span>
+                  </label>
+                </div>
+                {errors.photoConsent && (
+                  <p className="text-red-500 text-sm">
+                    {errors.photoConsent.message}
+                  </p>
+                )}
+              </div>
             </div>
-          )}
+
+            {/* Lash history */}
+            <div className="bg-secondary_light p-4 space-y-2">
+              <div>
+                <p>Have you had eyelash extension before?</p>
+                <div className="flex space-x-4">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="Yes"
+                      {...register("lashesBefore", {
+                        required: "Please select an option.",
+                      })}
+                    />
+                    <span>Yes</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="No"
+                      {...register("lashesBefore", {
+                        required: "Please select an option.",
+                      })}
+                    />
+                    <span>No</span>
+                  </label>
+                </div>
+                {errors.lashesBefore && (
+                  <p className="text-red-500 text-sm">
+                    {errors.lashesBefore.message}
+                  </p>
+                )}
+              </div>
+              {watchLashesBefore === "Yes" && (
+                <div className="ml-4 md:ml-8">
+                  <label htmlFor="whereApplied">Where?</label>
+                  <input
+                    id="whereApplied"
+                    type="text"
+                    placeholder="Salon or location (optional)"
+                    className={`w-full p-2 border rounded ${
+                      errors.whereApplied && "border-red-500"
+                    }`}
+                    {...register("whereApplied", {
+                      maxLength: {
+                        value: 50,
+                        message: "This field cannot exceed 50 characters",
+                      },
+                    })}
+                  />
+                  {errors.whereApplied && (
+                    <p className="text-red-500 text-sm">
+                      {errors.whereApplied.message}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Product usage */}
+              <div>
+                <p>Do you use products on your eyelashes?</p>
+                <div className="flex space-x-4">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="Yes"
+                      {...register("useofProducts", {
+                        required: "Please select an option.",
+                      })}
+                    />
+                    <span>Yes</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="No"
+                      {...register("useofProducts", {
+                        required: "Please select an option.",
+                      })}
+                    />
+                    <span>No</span>
+                  </label>
+                </div>
+                {errors.useofProducts && (
+                  <p className="text-red-500 text-sm">
+                    {errors.useofProducts.message}
+                  </p>
+                )}
+              </div>
+              {watchUseOfProducts === "Yes" && (
+                <div className="ml-4 md:ml-8">
+                  <p>Which products?</p>
+                  <div className="flex space-x-4 items-center">
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        value="Curl"
+                        {...register("products", {
+                          required: "Please select an option.",
+                        })}
+                      />
+                      <span>Curl</span>
+                    </label>
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        value="Perm"
+                        {...register("products", {
+                          required: "Please select an option.",
+                        })}
+                      />
+                      <span>Perm</span>
+                    </label>
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        value="Tint"
+                        {...register("products", {
+                          required: "Please select an option.",
+                        })}
+                      />
+                      <span>Tint</span>
+                    </label>
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        value="Other"
+                        {...register("products", {
+                          required: "Please select an option.",
+                        })}
+                      />
+                      <span>Other</span>
+                    </label>
+                  </div>
+                  {errors.products && (
+                    <p className="text-red-500 text-sm">
+                      {errors.products.message}
+                    </p>
+                  )}
+                </div>
+              )}
+              {watchProducts === "Other" && (
+                <div className="ml-8 md:ml-16">
+                  <label htmlFor="otherProduct">Other</label>
+                  <input
+                    id="otherProduct"
+                    type="text"
+                    placeholder="Other Product name..."
+                    className={`w-full p-2 border rounded ${
+                      errors.otherProduct && "border-red-500"
+                    }`}
+                    {...register("otherProduct", {
+                      required: "Please specify.",
+                      maxLength: {
+                        value: 50,
+                        message: "This field cannot exceed 50 characters",
+                      },
+                    })}
+                  />
+                  {errors.otherProduct && (
+                    <p className="text-red-500 text-sm">
+                      {errors.otherProduct.message}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          </>
         </div>
+        {/* Navigation buttons */}
+        <FormNavButtons currentStep={currentStep} />
       </form>
     </div>
   );

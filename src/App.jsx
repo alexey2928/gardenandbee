@@ -14,6 +14,7 @@ import { fetchGallery } from "./services/fetchGallery";
 import { fetchTeam } from "./services/fetchTeam";
 import Forms from "./components/Forms/Forms";
 import LashExtensionForm from "./components/Forms/lashes/LashExtensionForm";
+import ScrollToTop from "./common/ScrollToTop";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const App = () => {
 
   return (
     <>
+      <ScrollToTop />
       <Routes>
         {/* Main page without Navbar & Footer */}
         <Route path="/" element={<Main />} />
@@ -49,11 +51,11 @@ const App = () => {
                 <Route path="services" element={<Services />} />
                 <Route path="about" element={<AboutUs />} />
                 <Route path="gallery" element={<DomeGallery />} />
-                {/* <Route path="forms" element={<Forms />} />
+                <Route path="forms" element={<Forms />} />
                 <Route
                   path="forms/lash-extension"
                   element={<LashExtensionForm />}
-                /> */}
+                />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Layout>
