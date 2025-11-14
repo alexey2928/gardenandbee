@@ -22,6 +22,9 @@ const HamburgerMenu = ({ isOpen, handleHamburgerClick, isFooter, height }) => {
           <Navlink url="gallery" name="GALLERY" />
         </span>
         <span onClick={handleHamburgerClick}>
+          <Navlink url="forms" name="FORMS" />
+        </span>
+        <span onClick={handleHamburgerClick}>
           <Navlink url="about" name="ABOUT US" />
         </span>
       </div>
