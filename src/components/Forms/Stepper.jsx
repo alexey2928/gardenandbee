@@ -11,8 +11,10 @@ export default function Stepper({
   const stepsArray = Children.toArray(children);
   const totalSteps = stepsArray.length;
   const isLastStep = currentStep === totalSteps;
+  const [submissionStatus, setSubmissionStatus] = useState(null);
 
-  const goToNextPage = () => {
+  const goToNextPage = (status = null) => {
+    if (status) setSubmissionStatus(status);
     if (currentStep < totalSteps) {
       setDirection(1);
       setCurrentStep(currentStep + 1);
@@ -58,6 +60,7 @@ export default function Stepper({
             goToPreviousPage,
             isLastStep,
             currentStep,
+            submissionStatus,
           })}
         </StepContentWrapper>
       </div>

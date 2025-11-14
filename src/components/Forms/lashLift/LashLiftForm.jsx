@@ -3,8 +3,9 @@ import Stepper, { Step } from "../Stepper";
 import Page1 from "./Page1";
 import Page2 from "./Page2";
 import Page3 from "./Page3";
+import ConfirmationPage from "../ConfirmationPage";
 
-const LashExtensionForm = () => {
+const LashLiftForm = () => {
   return (
     <Stepper initialStep={1}>
       <Step>
@@ -16,8 +17,11 @@ const LashExtensionForm = () => {
       <Step>
         <Page3 />
       </Step>
+      <Step>
+        <ConfirmationPage />
+      </Step>
     </Stepper>
   );
 };
 
-export default LashExtensionForm;
+export default LashLiftForm;

@@ -31,19 +31,17 @@ const Page1 = ({ currentStep, goToNextPage }) => {
   });
 
   const allValues = watch();
-  const watchLashesBefore = watch("lashesBefore");
-  const watchUseOfProducts = watch("useofProducts");
+  const watchServiceBefore = watch("serviceBefore");
+
   const watchProducts = watch("products");
 
   useEffect(() => {
     const clearIf = (condition, ...fields) => {
       if (condition) fields.forEach((f) => setValue(f, ""));
     };
-
-    clearIf(watchLashesBefore !== "Yes", "whereApplied");
-    clearIf(watchUseOfProducts !== "Yes", "products", "otherProduct");
+    clearIf(watchServiceBefore !== "Yes", "whereApplied");
     clearIf(watchProducts !== "Other", "otherProduct");
-  }, [watchLashesBefore, watchUseOfProducts, watchProducts, setValue]);
+  }, [watchServiceBefore, watchProducts, setValue]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -433,7 +431,7 @@ const Page1 = ({ currentStep, goToNextPage }) => {
                     <input
                       type="radio"
                       value="Yes"
-                      {...register("lashesBefore", {
+                      {...register("serviceBefore", {
                         required: "Please select an option.",
                       })}
                     />
@@ -443,20 +441,20 @@ const Page1 = ({ currentStep, goToNextPage }) => {
                     <input
                       type="radio"
                       value="No"
-                      {...register("lashesBefore", {
+                      {...register("serviceBefore", {
                         required: "Please select an option.",
                       })}
                     />
                     <span>No</span>
                   </label>
                 </div>
-                {errors.lashesBefore && (
+                {errors.serviceBefore && (
                   <p className="text-red-500 text-sm">
-                    {errors.lashesBefore.message}
+                    {errors.serviceBefore.message}
                   </p>
                 )}
               </div>
-              {watchLashesBefore === "Yes" && (
+              {watchServiceBefore === "Yes" && (
                 <div className="ml-4 md:ml-8">
                   <label htmlFor="whereApplied">Where?</label>
                   <input
@@ -483,89 +481,68 @@ const Page1 = ({ currentStep, goToNextPage }) => {
 
               {/* Product usage */}
               <div>
-                <p>Do you use products on your eyelashes?</p>
-                <div className="flex space-x-4">
+                <p>Which products do you use on your lashes?</p>
+                <div className="flex space-x-4 items-center">
                   <label className="flex items-center space-x-2">
                     <input
                       type="radio"
-                      value="Yes"
-                      {...register("useofProducts", {
+                      value="None"
+                      {...register("products", {
                         required: "Please select an option.",
                       })}
                     />
-                    <span>Yes</span>
+                    <span>None</span>
                   </label>
                   <label className="flex items-center space-x-2">
                     <input
                       type="radio"
-                      value="No"
-                      {...register("useofProducts", {
+                      value="Curl"
+                      {...register("products", {
                         required: "Please select an option.",
                       })}
                     />
-                    <span>No</span>
+                    <span>Curl</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="Perm"
+                      {...register("products", {
+                        required: "Please select an option.",
+                      })}
+                    />
+                    <span>Perm</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="Tint"
+                      {...register("products", {
+                        required: "Please select an option.",
+                      })}
+                    />
+                    <span>Tint</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="Other"
+                      {...register("products", {
+                        required: "Please select an option.",
+                      })}
+                    />
+                    <span>Other</span>
                   </label>
                 </div>
-                {errors.useofProducts && (
+                {errors.products && (
                   <p className="text-red-500 text-sm">
-                    {errors.useofProducts.message}
+                    {errors.products.message}
                   </p>
                 )}
               </div>
-              {watchUseOfProducts === "Yes" && (
-                <div className="ml-4 md:ml-8">
-                  <p>Which products?</p>
-                  <div className="flex space-x-4 items-center">
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="radio"
-                        value="Curl"
-                        {...register("products", {
-                          required: "Please select an option.",
-                        })}
-                      />
-                      <span>Curl</span>
-                    </label>
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="radio"
-                        value="Perm"
-                        {...register("products", {
-                          required: "Please select an option.",
-                        })}
-                      />
-                      <span>Perm</span>
-                    </label>
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="radio"
-                        value="Tint"
-                        {...register("products", {
-                          required: "Please select an option.",
-                        })}
-                      />
-                      <span>Tint</span>
-                    </label>
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="radio"
-                        value="Other"
-                        {...register("products", {
-                          required: "Please select an option.",
-                        })}
-                      />
-                      <span>Other</span>
-                    </label>
-                  </div>
-                  {errors.products && (
-                    <p className="text-red-500 text-sm">
-                      {errors.products.message}
-                    </p>
-                  )}
-                </div>
-              )}
+
               {watchProducts === "Other" && (
-                <div className="ml-8 md:ml-16">
+                <div className="ml-4 md:ml-8">
                   <label htmlFor="otherProduct">Other</label>
                   <input
                     id="otherProduct"

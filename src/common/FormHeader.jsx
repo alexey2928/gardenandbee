@@ -1,8 +1,8 @@
 import React from "react";
 
-const FormHeader = ({ title, pageName, topPadding = true }) => {
+const FormHeader = ({ title, pageName }) => {
   return (
-    <div className={`flex flex-col space-y-2 ${topPadding && "pt-4"} px-4`}>
+    <div className={`flex flex-col space-y-2 p-4`}>
       <h2 className="text-center text-3xl font-medium leading-normal text-primary_dark">
         {title}
       </h2>

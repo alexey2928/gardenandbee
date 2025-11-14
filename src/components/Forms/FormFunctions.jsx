@@ -1,52 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
 export const REGEX_EMAIL = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 export const REGEX_PHONE = /^[0-9]{10}$/; // simple US 10-digit pattern
+export const REGEX_INITIALS = /^[A-Z]{2}$/;
 
-// export function useClearDependentFields(watchValue, resetField, rules) {
-//   const prevValue = useRef(watchValue);
-
-//   useEffect(() => {
-//     // Only run if value changed
-//     if (prevValue.current !== watchValue) {
-//       rules.forEach(({ when, clear }) => {
-//         // Clear fields only if condition is NOT met
-//         if (!when(watchValue)) {
-//           clear.forEach((field) => {
-//             try {
-//               resetField(field);
-//             } catch (err) {
-//               console.warn(`Failed to reset field "${field}":`, err);
-//             }
-//           });
-//         }
-//       });
-
-//       prevValue.current = watchValue;
-//     }
-//   }, [watchValue, resetField, rules]);
-// }
-export function useClearDependentFieldsSimple(
-  watchValue,
-  setValue,
-  fieldsToClear = []
-) {
-  const prevRef = useRef(watchValue);
-
-  useEffect(() => {
-    if (prevRef.current !== watchValue) {
-      fieldsToClear.forEach((field) => {
-        try {
-          setValue(field, "", { shouldDirty: true, shouldTouch: false });
-        } catch (err) {
-          console.warn(`Failed to clear field "${field}":`, err);
-        }
-      });
-
-      prevRef.current = watchValue;
-    }
-  }, [watchValue, setValue, fieldsToClear]);
-}
 export const formatPhoneNumber = (value) => {
   if (!value) return "";
   // Remove all non-digit characters
@@ -80,4 +37,27 @@ export const trimData = (data) => {
       return [key, value];
     })
   );
+};
+
+export const formatName = (name) => {
+  if (!name) return "";
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+};
+
+export const formatServiceName = (name) => {
+  if (!name) return "";
+
+  // Remove the trailing "Form" if it exists
+  let formatted = name.replace(/Form$/i, "");
+
+  // Insert space before each capital letter
+  formatted = formatted.replace(/([a-z])([A-Z])/g, "$1 $2");
+
+  // Capitalize the first letter and lowercase the rest of each word
+  formatted = formatted
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+
+  return formatted;
 };
