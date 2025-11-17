@@ -59,8 +59,10 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
   );
 
   const onSubmit = async (data) => {
+    if (isSubmitting) return;
     if (!validateSignature()) return;
 
+    setIsSubmitting(true);
     const signatureDataUrl = sigRef.current.toDataURL();
 
     // Save data to Redux
