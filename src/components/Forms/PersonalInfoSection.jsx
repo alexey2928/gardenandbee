@@ -1,6 +1,7 @@
 import React from "react";
 import { Controller } from "react-hook-form";
 import { REGEX_EMAIL, REGEX_PHONE, formatPhoneNumber } from "./FormFunctions";
+import DatePickerModal from "../../common/DatePickerModal";
 
 const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
 
@@ -47,33 +48,27 @@ const PersonalInfoSection = ({ register, control, errors }) => {
       </div>
 
       {/* Date of Birth */}
-      <div>
-        <label htmlFor="dateOfBirth">Date of Birth</label>
-        <input
-          id="dateOfBirth"
-          type="date"
-          className={`w-full p-2 border rounded ${
-            errors.dateOfBirth && "border-red-500"
-          }`}
-          min="1900-01-01"
-          max={yesterday}
-          {...register("dateOfBirth", {
-            required: "Date of Birth is required.",
-            validate: (value) => {
-              const date = new Date(value);
-              const min = new Date("1900-01-01");
-              const max = new Date(Date.now() - 86400000);
-              if (isNaN(date)) return "Invalid date.";
-              if (date < min) return "Date must be after Jan 1, 1900.";
-              if (date > max) return "Date cannot be today or in the future.";
-              return true;
-            },
-          })}
-        />
-        {errors.dateOfBirth && (
-          <p className="text-red-500 text-sm">{errors.dateOfBirth.message}</p>
+      <Controller
+        name="dateOfBirth"
+        control={control}
+        rules={{
+          required: "Date of Birth is required.",
+        }}
+        render={({ field }) => (
+          <div>
+            <label>Date of Birth</label>
+            <DatePickerModal
+              value={field.value}
+              onChange={(val) => field.onChange(val)}
+            />
+            {errors.dateOfBirth && (
+              <p className="text-red-500 text-sm">
+                {errors.dateOfBirth.message}
+              </p>
+            )}
+          </div>
         )}
-      </div>
+      />
 
       {/* Gender */}
       <div>
