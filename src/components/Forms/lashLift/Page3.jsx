@@ -58,8 +58,10 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
     [getFormattedDate]
   );
   const onSubmit = async (data) => {
+    if (isSubmitting) return;
     if (!validateSignature()) return;
 
+    setIsSubmitting(true);
     const signatureDataUrl = sigRef.current.toDataURL();
 
     // Save data to Redux
@@ -94,7 +96,7 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
     } catch (error) {
       reset();
       sigRef.current?.clear();
-      dispatch(clearForm({ formName: "eyelashExtensionForm" }));
+      dispatch(clearForm({ formName: "eyelashLiftForm" }));
       goToNextPage({ success: false });
     } finally {
       setIsSubmitting(false);
