@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   clearForm,
   savePageData,
-  selectEyelashExtensionForm,
+  selectBrowShapingForm,
 } from "../../../store/slices/formsSlice";
 import FormNavButtons from "../../../common/FormNavButtons";
 import FormHeader from "../../../common/FormHeader";
@@ -17,9 +17,9 @@ import { CircularProgress } from "@mui/material";
 const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
   const dispatch = useDispatch();
 
-  const formData = useSelector(selectEyelashExtensionForm);
+  const formData = useSelector(selectBrowShapingForm);
   const consents = useSelector(selectConsents);
-  const eyelashExtConsents = consents?.[1]?.lashExtConsent || [];
+  const browShapingConsents = consents?.[0]?.browShapingConsent || [];
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -57,7 +57,6 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
     () => getFormattedDate(),
     [getFormattedDate]
   );
-
   const onSubmit = async (data) => {
     if (isSubmitting) return;
     if (!validateSignature()) return;
@@ -68,11 +67,11 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
     // Save data to Redux
     dispatch(
       savePageData({
-        formName: "eyelashExtensionForm",
+        formName: "browShapingForm",
         page: "page3",
         data: {
           ...data,
-          consents: eyelashExtConsents,
+          consents: browShapingConsents,
           signature: signatureDataUrl,
         },
       })
@@ -83,21 +82,21 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
       ...formData,
       page3: {
         ...data,
-        consents: eyelashExtConsents,
+        consents: browShapingConsents,
         signature: signatureDataUrl,
         submissionDate: getFormattedDate(),
       },
     };
     try {
-      await submitForm("eyelashExtensionForm", fullFormData);
+      await submitForm("browShapingForm", fullFormData);
       reset();
       sigRef.current?.clear();
-      dispatch(clearForm({ formName: "eyelashExtensionForm" }));
+      dispatch(clearForm({ formName: "browShapingForm" }));
       goToNextPage({ success: true });
     } catch (error) {
       reset();
       sigRef.current?.clear();
-      dispatch(clearForm({ formName: "eyelashExtensionForm" }));
+      dispatch(clearForm({ formName: "browShapingForm" }));
       goToNextPage({ success: false });
     } finally {
       setIsSubmitting(false);
@@ -121,14 +120,14 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
         </div>
       )}
       {/* Header */}
-      <FormHeader title="EYELASH EXTENSION" pageName="Consent + Liability" />
+      <FormHeader title="BROW SHAPING + TINT" pageName="Consent + Liability" />
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
         <div className="p-4 space-y-4">
           {/* Consent Text */}
           <div className="p-4 border rounded bg-gray-50 h-64 overflow-y-scroll text-sm">
             <ul className="ml-2 list-disc flex flex-col">
-              {eyelashExtConsents.length > 0 ? (
-                eyelashExtConsents.map((consent, index) => (
+              {browShapingConsents.length > 0 ? (
+                browShapingConsents.map((consent, index) => (
                   <li key={index}>{consent}</li>
                 ))
               ) : (
@@ -147,8 +146,8 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
               />
               <label htmlFor="agree" className="text-sm">
                 I have read and fully understand all information in this
-                agreement. I consent to the agreement and to the eyelash
-                extension application procedure.
+                agreement. I consent to the agreement and to the brow shaping
+                procedure.
               </label>
             </div>
             {errors.agree && (

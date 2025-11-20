@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   savePageData,
-  selectThreadingWaxingForm,
+  selectBrowShapingForm,
 } from "../../../store/slices/formsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import FormHeader from "../../../common/FormHeader";
@@ -11,7 +11,7 @@ import { trimData } from "../FormFunctions";
 
 const Page2 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
   const dispatch = useDispatch();
-  const formData = useSelector(selectThreadingWaxingForm);
+  const formData = useSelector(selectBrowShapingForm);
   const page2Data = formData.page2;
 
   const {
@@ -38,7 +38,7 @@ const Page2 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
     const timeout = setTimeout(() => {
       dispatch(
         savePageData({
-          formName: "threadingWaxingForm",
+          formName: "browShapingForm",
           page: "page2",
           data: trimData(allValues),
         })
@@ -51,7 +51,7 @@ const Page2 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
     const trimmedData = trimData(data);
     dispatch(
       savePageData({
-        formName: "threadingWaxingForm",
+        formName: "browShapingForm",
         page: "page2",
         data: trimmedData,
       })
@@ -61,7 +61,7 @@ const Page2 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
   return (
     <div className="max-w-5xl mx-auto bg-white rounded-b-2xl shadow">
       {/* Header */}
-      <FormHeader title="THREADING & WAXING" pageName="Medical History" />
+      <FormHeader title="BROW SHAPING + TINT" pageName="Medical History" />
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
         <div className="p-4">
           {/* Inputs */}
@@ -228,13 +228,14 @@ const Page2 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
                 </p>
               )}
             </div>
+
             {/* Skincare Products */}
             <div className="mt-4">
               <p>
                 Are you currently using any of the following skincare products?
               </p>
               <p className="text-sm text-neutral-500">
-                These may increase sensitivity during waxing or threading.
+                These may increase sensitivity during brow shaping.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mt-2">
@@ -265,6 +266,7 @@ const Page2 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
                 </p>
               )}
             </div>
+
             {/* Medications */}
             <div>
               <label htmlFor="medications">

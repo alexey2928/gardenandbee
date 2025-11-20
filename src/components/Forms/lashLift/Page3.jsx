@@ -19,7 +19,7 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
 
   const formData = useSelector(selectEyelashLiftForm);
   const consents = useSelector(selectConsents);
-  const eyelashLiftConsents = consents?.[1]?.lashLiftConsent || [];
+  const eyelashLiftConsents = consents?.[2]?.lashLiftConsent || [];
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
