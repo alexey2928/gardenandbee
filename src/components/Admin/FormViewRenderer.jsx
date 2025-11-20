@@ -152,13 +152,18 @@ const FormViewRenderer = ({ form }) => {
         )}
 
         <Field label="Pregnant?">{page2.pregnant}</Field>
+
         <Field label="Wear glasses?">{page2.glasses}</Field>
         <Field label="Wear lenses?">{page2.lenses}</Field>
 
         <Field label="Eye illness or injury?">{page2.eyeIllness}</Field>
 
         <Field label="Watery / irritated eyes?">{page2.wateryEyes}</Field>
-
+        {Array.isArray(page2.products) && page2.products.length > 0 && (
+          <Field label="Skincare Products">
+            <List items={page2.products} />
+          </Field>
+        )}
         <Field label="Medications / Supplements">{page2.medications}</Field>
       </Section>
 
