@@ -16,6 +16,11 @@ const initialState = {
     page2: {},
     page3: {},
   },
+  browShapingForm: {
+    page1: {},
+    page2: {},
+    page3: {},
+  },
 };
 
 const formsSlice = createSlice({
@@ -43,5 +48,6 @@ export const selectEyelashExtensionForm = (state) =>
 export const selectEyelashLiftForm = (state) => state.forms.eyelashLiftForm;
 export const selectThreadingWaxingForm = (state) =>
   state.forms.threadingWaxingForm;
+export const selectBrowShapingForm = (state) => state.forms.browShapingForm;
 export const { savePageData, clearForm } = formsSlice.actions;
 export default formsSlice.reducer;

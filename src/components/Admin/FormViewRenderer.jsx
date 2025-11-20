@@ -131,6 +131,8 @@ const FormViewRenderer = ({ form }) => {
               : page1.products}
           </Field>
         )}
+
+        {page1.browShape && <Field label="Brow Shape">{page1.browShape}</Field>}
       </Section>
 
       {/* ---------- PAGE 2 ---------- */}
@@ -153,18 +155,22 @@ const FormViewRenderer = ({ form }) => {
 
         <Field label="Pregnant?">{page2.pregnant}</Field>
 
-        <Field label="Wear glasses?">{page2.glasses}</Field>
-        <Field label="Wear lenses?">{page2.lenses}</Field>
-
-        <Field label="Eye illness or injury?">{page2.eyeIllness}</Field>
-
-        <Field label="Watery / irritated eyes?">{page2.wateryEyes}</Field>
+        {page2.glasses && <Field label="Wear glasses?">{page2.glasses}</Field>}
+        {page2.lenses && <Field label="Wear lenses?">{page2.lenses}</Field>}
+        {page2.eyeIllness && (
+          <Field label="Eye illness or injury?">{page2.eyeIllness}</Field>
+        )}
+        {page2.wateryEyes && (
+          <Field label="Watery / irritated eyes?">{page2.wateryEyes}</Field>
+        )}
         {Array.isArray(page2.products) && page2.products.length > 0 && (
           <Field label="Skincare Products">
             <List items={page2.products} />
           </Field>
         )}
-        <Field label="Medications / Supplements">{page2.medications}</Field>
+        {page2.medications && (
+          <Field label="Medications / Supplements">{page2.medications}</Field>
+        )}
       </Section>
 
       {/* ---------- PAGE 3 ---------- */}
