@@ -25,6 +25,7 @@ import { formatServiceName } from "../Forms/FormFunctions";
 import FormModal from "./FormModal";
 import FormViewRenderer from "./FormViewRenderer";
 import ThreadingWaxingPdf from "../Forms/threadingWaxing/ThreadingWaxingPdf";
+import BrowShapingPdf from "../Forms/browShaping/BrowShapingPdf";
 
 const AdminPage = () => {
   const [groupedForms, setGroupedForms] = useState({});
@@ -75,6 +76,9 @@ const AdminPage = () => {
       let Component;
 
       switch (form.service) {
+        case "browShapingForm":
+          Component = <BrowShapingPdf formData={form.formData} />;
+          break;
         case "eyelashLiftForm":
           Component = <LashLiftFormPdf formData={form.formData} />;
           break;

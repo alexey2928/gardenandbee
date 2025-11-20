@@ -22,6 +22,7 @@ import AdminLogin from "./components/Admin/AdminLogin";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { fetchConsents } from "./services/fetchConsents";
 import ThreadingWaxingForm from "./components/Forms/threadingWaxing/ThreadingWaxingForm";
+import BrowShapingForm from "./components/Forms/browShaping/BrowShapingForm";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -101,6 +102,10 @@ const App = () => {
                 <Route
                   path="forms/threading-waxing"
                   element={<ThreadingWaxingForm />}
+                />
+                <Route
+                  path="forms/brow-shaping"
+                  element={<BrowShapingForm />}
                 />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>

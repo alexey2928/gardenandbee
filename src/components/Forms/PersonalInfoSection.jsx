@@ -3,8 +3,6 @@ import { Controller } from "react-hook-form";
 import { REGEX_EMAIL, REGEX_PHONE, formatPhoneNumber } from "./FormFunctions";
 import DatePickerModal from "../../common/DatePickerModal";
 
-const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
-
 const PersonalInfoSection = ({ register, control, errors }) => {
   return (
     <div className="space-y-2">
