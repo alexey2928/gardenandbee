@@ -21,6 +21,7 @@ import ProtectedRoute from "./components/Admin/ProtectedRoute";
 import AdminLogin from "./components/Admin/AdminLogin";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { fetchConsents } from "./services/fetchConsents";
+import ThreadingWaxingForm from "./components/Forms/threadingWaxing/ThreadingWaxingForm";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -97,6 +98,10 @@ const App = () => {
                   element={<LashExtensionForm />}
                 />
                 <Route path="forms/lash-lift" element={<LashLiftForm />} />
+                <Route
+                  path="forms/threading-waxing"
+                  element={<ThreadingWaxingForm />}
+                />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Layout>

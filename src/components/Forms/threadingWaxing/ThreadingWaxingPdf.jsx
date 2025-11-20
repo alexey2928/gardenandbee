@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
 });
 
 // PDF COMPONENT
-const LashLiftFormPdf = ({ formData }) => {
+const ThreadingWaxingPdf = ({ formData }) => {
   const { page1, page2, page3 } = formData || {};
   return (
     <Document>
@@ -83,9 +83,9 @@ const LashLiftFormPdf = ({ formData }) => {
           style={styles.logo}
         />
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>EYELASH LIFT + TINT</Text>
+          <Text style={styles.headerTitle}>THREADING & WAXING</Text>
           <Text style={styles.headerSubTitle}>
-            Personal Information + Lash History
+            Personal Information + History
           </Text>
         </View>
 
@@ -161,7 +161,9 @@ const LashLiftFormPdf = ({ formData }) => {
         {/* Lash history */}
         <View style={styles.box}>
           <View style={styles.section}>
-            <Text style={styles.bold}>Have you had eyelash lift before?</Text>
+            <Text style={styles.bold}>
+              Have you had threading or facial waxing before?
+            </Text>
             <Text>{page1.serviceBefore}</Text>
 
             {page1.serviceBefore === "Yes" && (
@@ -174,7 +176,8 @@ const LashLiftFormPdf = ({ formData }) => {
           {/* Product usage */}
           <View style={styles.section}>
             <Text style={styles.bold}>
-              Which products do you use on your eyelashes?
+              Have you used any hair-removal products or tools on your face
+              recently?
             </Text>
             <Text>
               {page1.products === "Other" ? page1.otherProduct : page1.products}
@@ -189,7 +192,7 @@ const LashLiftFormPdf = ({ formData }) => {
       <Page size="A4" style={styles.page}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>EYELASH LIFT + TINT</Text>
+          <Text style={styles.headerTitle}>THREADING & WAXING</Text>
           <Text style={styles.headerSubTitle}>Medical History</Text>
         </View>
 
@@ -227,33 +230,13 @@ const LashLiftFormPdf = ({ formData }) => {
           <Text>{page2.pregnant}</Text>
         </View>
 
-        {/* Glasses */}
-        <View style={styles.section}>
-          <Text style={styles.bold}>Do you wear glasses?</Text>
-          <Text>{page2.glasses}</Text>
-        </View>
-
-        {/* Lenses */}
-        <View style={styles.section}>
-          <Text style={styles.bold}>Do you wear lenses?</Text>
-          <Text>{page2.lenses}</Text>
-        </View>
-
-        {/* Eye Illness */}
-        <View style={styles.section}>
-          <Text style={styles.bold}>
-            Do you have, or are you being treated for any eye illness/injury?
-          </Text>
-          <Text>{page2.eyeIllness}</Text>
-        </View>
-
-        {/* Watery eyes */}
-        <View style={styles.section}>
-          <Text style={styles.bold}>
-            Do you often have eye irritation, itching or watery eyes?
-          </Text>
-          <Text>{page2.wateryEyes}</Text>
-        </View>
+        {/* Skincare Products */}
+        {Array.isArray(page2.products) && page2.products.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.bold}>Skincare products:</Text>
+            <Text>{page2.products.join(", ")}</Text>
+          </View>
+        )}
 
         {/* Medications */}
         {page2.medications && (
@@ -272,7 +255,7 @@ const LashLiftFormPdf = ({ formData }) => {
       <Page size="A4" style={styles.page}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>EYELASH LIFT + TINT</Text>
+          <Text style={styles.headerTitle}>THREADING & WAXING</Text>
           <Text style={styles.headerSubTitle}>Consent + Liability</Text>
         </View>
 
@@ -297,8 +280,8 @@ const LashLiftFormPdf = ({ formData }) => {
             />
             <Text style={{ flex: 1 }}>
               I have read and fully understand all information in this
-              agreement. I consent to the agreement and to the eyelash lift
-              application procedure.
+              agreement. I consent to the agreement and to the threading or
+              waxing procedure.
             </Text>
           </View>
         </View>
@@ -335,4 +318,4 @@ const LashLiftFormPdf = ({ formData }) => {
   );
 };
 
-export default LashLiftFormPdf;
+export default ThreadingWaxingPdf;

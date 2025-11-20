@@ -24,6 +24,7 @@ import { formatServiceName } from "../Forms/FormFunctions";
 
 import FormModal from "./FormModal";
 import FormViewRenderer from "./FormViewRenderer";
+import ThreadingWaxingPdf from "../Forms/threadingWaxing/ThreadingWaxingPdf";
 
 const AdminPage = () => {
   const [groupedForms, setGroupedForms] = useState({});
@@ -80,6 +81,9 @@ const AdminPage = () => {
         case "eyelashExtensionForm":
           Component = <LashExtFormPdf formData={form.formData} />;
           break;
+        case "threadingWaxingForm":
+          Component = <ThreadingWaxingPdf formData={form.formData} />;
+          break;
         default:
           console.warn("Unknown service type:", form.service);
           return;
@@ -117,49 +121,6 @@ const AdminPage = () => {
     <div>
       <MenuHeader name="Submitted Forms" />
 
-      {/* <table className="w-full border-collapse my-10">
-        <thead>
-          <tr className="text-primary_dark">
-            <th className="border px-2 py-1">Name</th>
-            <th className="border px-2 py-1">Service</th>
-            <th className="border px-2 py-1">Submitted At</th>
-            <th className="border px-2 py-1">Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {Object.entries(groupedForms).map(([name, forms]) => (
-            <React.Fragment key={name}>
-              {forms.map((form, index) => (
-                <tr key={form.id}>
-                  {index === 0 && (
-                    <td className="border px-2 py-1" rowSpan={forms.length}>
-                      {name}
-                    </td>
-                  )}
-                  <td className="border px-2 py-1">
-                    {formatServiceName(form.service)}
-                  </td>
-                  <td className="border px-2 py-1">
-                    {form.createdAt?.toDate().toLocaleString()}
-                  </td>
-                  <td className="border px-2 py-1">
-                    <div className="flex justify-center items-center gap-4">
-                      <button onClick={() => handleView(form)}>
-                        <FaWpforms className="w-6 h-6 text-primary_dark" />
-                      </button>
-
-                      <button onClick={() => handlePrint(form)}>
-                        <SlPrinter className="w-6 h-6 text-primary_dark" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </React.Fragment>
-          ))}
-        </tbody>
-      </table> */}
       <TableContainer
         component={Paper}
         sx={{
@@ -201,6 +162,7 @@ const AdminPage = () => {
                   right: 0,
                   backgroundColor: "background.paper",
                   zIndex: 5,
+                  textAlign: "right",
                 }}
               >
                 Actions
@@ -223,7 +185,6 @@ const AdminPage = () => {
                           left: 0,
                           backgroundColor: "background.paper",
                           zIndex: 4,
-                          verticalAlign: "top",
                         }}
                       >
                         {name}
@@ -247,7 +208,7 @@ const AdminPage = () => {
                         zIndex: 4,
                       }}
                     >
-                      <div className="flex justify-center items-center gap-4">
+                      <div className="flex justify-end items-center gap-4">
                         <IconButton onClick={() => handleView(form)}>
                           <FaWpforms size={22} style={{ color: "#704415" }} />
                         </IconButton>
