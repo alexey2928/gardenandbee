@@ -1,11 +1,6 @@
 import React, { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import {
-  formatPhoneNumber,
-  REGEX_EMAIL,
-  REGEX_PHONE,
-  trimData,
-} from "../FormFunctions";
+import { useForm } from "react-hook-form";
+import { trimData } from "../FormFunctions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   savePageData,

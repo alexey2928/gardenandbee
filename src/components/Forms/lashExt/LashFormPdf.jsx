@@ -164,9 +164,9 @@ const LashFormPdf = ({ formData }) => {
             <Text style={styles.bold}>
               Have you had eyelash extensions before?
             </Text>
-            <Text>{page1.lashesBefore}</Text>
+            <Text>{page1.serviceBefore}</Text>
 
-            {page1.lashesBefore === "Yes" && (
+            {page1.serviceBefore === "Yes" && (
               <Text>
                 <Text style={styles.bold}>Where:</Text> {page1.whereApplied}
               </Text>

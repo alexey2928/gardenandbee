@@ -4,7 +4,7 @@ import { trimData } from "../FormFunctions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   savePageData,
-  selectEyelashExtensionForm,
+  selectThreadingWaxingForm,
 } from "../../../store/slices/formsSlice";
 import FormHeader from "../../../common/FormHeader";
 import FormNavButtons from "../../../common/FormNavButtons";
@@ -12,7 +12,7 @@ import PersonalInfoSection from "../PersonalInfoSection";
 
 const Page1 = ({ currentStep, goToNextPage }) => {
   const dispatch = useDispatch();
-  const formData = useSelector(selectEyelashExtensionForm);
+  const formData = useSelector(selectThreadingWaxingForm);
   const page1Data = formData.page1;
 
   const {
@@ -43,7 +43,7 @@ const Page1 = ({ currentStep, goToNextPage }) => {
     const timeout = setTimeout(() => {
       dispatch(
         savePageData({
-          formName: "eyelashExtensionForm",
+          formName: "threadingWaxingForm",
           page: "page1",
           data: trimData(allValues),
         })
@@ -56,7 +56,7 @@ const Page1 = ({ currentStep, goToNextPage }) => {
     const trimmedData = trimData(data);
     dispatch(
       savePageData({
-        formName: "eyelashExtensionForm",
+        formName: "threadingWaxingForm",
         page: "page1",
         data: trimmedData,
       })
@@ -68,8 +68,8 @@ const Page1 = ({ currentStep, goToNextPage }) => {
     <div className="max-w-5xl mx-auto bg-white rounded-b-2xl shadow">
       {/* Header */}
       <FormHeader
-        title="EYELASH EXTENSION"
-        pageName="Personal Information + Lash History"
+        title="THREADING & WAXING"
+        pageName="Personal Information + History"
       />
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
@@ -81,10 +81,10 @@ const Page1 = ({ currentStep, goToNextPage }) => {
               control={control}
               errors={errors}
             />
-            {/* Lash history */}
+            {/* Threading/Waxing history */}
             <div className="bg-secondary_light p-4 space-y-2">
               <div>
-                <p>Have you had eyelash extension before?</p>
+                <p>Have you had threading or facial waxing before?</p>
                 <div className="flex space-x-4">
                   <label className="flex items-center space-x-2">
                     <input
@@ -140,10 +140,20 @@ const Page1 = ({ currentStep, goToNextPage }) => {
 
               {/* Product usage */}
               <div>
-                <p>Which products do you use on your lashes?</p>
+                <p>
+                  Have you used any hair-removal products or tools on your face
+                  recently?
+                </p>
 
                 <div className="flex flex-wrap gap-x-3 gap-y-1 md:flex-nowrap">
-                  {["None", "Curl", "Perm", "Tint", "Other"].map((option) => (
+                  {[
+                    "None",
+                    "Wax",
+                    "Threading",
+                    "Tweezing",
+                    "Dermaplaning",
+                    "Other",
+                  ].map((option) => (
                     <label key={option} className="flex items-center space-x-2">
                       <input
                         type="radio"
