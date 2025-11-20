@@ -19,7 +19,8 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
 
   const formData = useSelector(selectEyelashExtensionForm);
   const consents = useSelector(selectConsents);
-  const eyelashExtConsents = consents?.[1]?.lashExtConsent || [];
+  const eyelashExtConsents =
+    consents?.find((item) => item.id === "lashExtension")?.lashExtConsent || [];
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 

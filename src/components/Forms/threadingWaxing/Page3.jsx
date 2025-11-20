@@ -19,7 +19,9 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
 
   const formData = useSelector(selectThreadingWaxingForm);
   const consents = useSelector(selectConsents);
-  const threadingWaxingConsents = consents?.[3]?.threadingWaxingConsent || [];
+  const threadingWaxingConsents =
+    consents?.find((item) => item.id === "threadingWaxing")
+      ?.threadingWaxingConsent || [];
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
