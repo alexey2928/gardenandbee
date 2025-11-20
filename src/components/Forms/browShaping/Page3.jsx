@@ -19,7 +19,9 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
 
   const formData = useSelector(selectBrowShapingForm);
   const consents = useSelector(selectConsents);
-  const browShapingConsents = consents?.[0]?.browShapingConsent || [];
+  const browShapingConsents =
+    consents?.find((item) => item.id === "browShaping")?.browShapingConsent ||
+    [];
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
