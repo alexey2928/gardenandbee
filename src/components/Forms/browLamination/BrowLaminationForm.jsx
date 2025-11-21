@@ -1,22 +1,22 @@
 import React from "react";
-import { selectBrowShapingForm } from "../../../store/slices/formsSlice";
+import { selectBrowLaminationForm } from "../../../store/slices/formsSlice";
 import Stepper, { Step } from "../Stepper";
 import PersonalHistoryPage from "../PersonalHistoryPage";
 import MedicalHistoryPage from "../MedicalHistoryPage";
 import ConsentSignaturePage from "../ConsentSignaturePage";
 import ConfirmationPage from "../ConfirmationPage";
 
-const BrowShapingForm = (props) => {
+const BrowLaminationForm = (props) => {
   return (
     <Stepper initialStep={1}>
       <Step>
         <PersonalHistoryPage
           {...props}
-          formName="browShapingForm"
-          formSelector={selectBrowShapingForm}
-          headerTitle="BROW SHAPING + TINT"
+          formName="browLaminationForm"
+          formSelector={selectBrowLaminationForm}
+          headerTitle="BROW LAMINATION + TINT"
           pageName="Personal Information + History"
-          serviceQuestion="Have you had brow shaping or tinting done before?"
+          serviceQuestion="Have you had brow lamination or tinting done before?"
           productQuestion="Have you used any hair-removal methods on your brows or face recently?"
           productOptions={[
             "None",
@@ -44,9 +44,9 @@ const BrowShapingForm = (props) => {
       <Step>
         <MedicalHistoryPage
           {...props}
-          formName="browShapingForm"
-          formSelector={selectBrowShapingForm}
-          headerTitle="BROW SHAPING + TINT"
+          formName="browLaminationForm"
+          formSelector={selectBrowLaminationForm}
+          headerTitle="BROW LAMINATION + TINT"
           conditions={[
             "Acne",
             "Cancer/Chemo",
@@ -81,12 +81,12 @@ const BrowShapingForm = (props) => {
       <Step>
         <ConsentSignaturePage
           {...props}
-          formName="browShapingForm"
-          formSelector={selectBrowShapingForm}
-          consentId="browShaping"
-          consentField="browShapingConsent"
-          headerTitle="BROW SHAPING + TINT"
-          agreementText="I have read and fully understand all information in this agreement. I consent to the agreement and to the brow shaping procedure."
+          formName="browLaminationForm"
+          formSelector={selectBrowLaminationForm}
+          consentId="browLamination"
+          consentField="browLaminationConsent"
+          headerTitle="BROW LAMINATION + TINT"
+          agreementText="I have read and fully understand all information in this agreement. I consent to the agreement and to the brow lamination procedure."
         />
       </Step>
       <Step>
@@ -96,4 +96,4 @@ const BrowShapingForm = (props) => {
   );
 };
 
-export default BrowShapingForm;
+export default BrowLaminationForm;

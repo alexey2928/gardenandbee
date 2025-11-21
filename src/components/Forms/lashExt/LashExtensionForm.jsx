@@ -1,22 +1,63 @@
 import React from "react";
+import { selectEyelashExtensionForm } from "../../../store/slices/formsSlice";
 import Stepper, { Step } from "../Stepper";
-
-import Page1 from "./Page1";
-import Page2 from "./Page2";
-import Page3 from "./Page3";
+import PersonalHistoryPage from "../PersonalHistoryPage";
+import MedicalHistoryPage from "../MedicalHistoryPage";
+import ConsentSignaturePage from "../ConsentSignaturePage";
 import ConfirmationPage from "../ConfirmationPage";
 
-const LashExtensionForm = () => {
+const LashExtensionForm = (props) => {
   return (
     <Stepper initialStep={1}>
       <Step>
-        <Page1 />
+        <PersonalHistoryPage
+          {...props}
+          formName="eyelashExtensionForm"
+          formSelector={selectEyelashExtensionForm}
+          headerTitle="EYELASH EXTENSION"
+          pageName="Personal Information + Lash History"
+          serviceQuestion="Have you had eyelash extension before?"
+          productQuestion="Which products do you use on your lashes?"
+          productOptions={["None", "Curl", "Perm", "Tint", "Other"]}
+        />
       </Step>
       <Step>
-        <Page2 />
+        <MedicalHistoryPage
+          {...props}
+          formName="eyelashExtensionForm"
+          formSelector={selectEyelashExtensionForm}
+          headerTitle="EYELASH EXTENSION"
+          conditions={[
+            "Alopecia",
+            "Allergies",
+            "Blepharoplasty",
+            "Cancer/Chemo",
+            "Cataract",
+            "Childbirth within 120 days",
+            "Conjunctivitis",
+            "Dry eyes",
+            "Eczema",
+            "Glaucoma",
+            "Permanent eye makeup",
+            "Psoriasis around the eyes",
+            "Recent eye infection",
+            "Sensitive Eyes",
+            "Thyroid disease",
+          ]}
+          latexHelperText="Medical tape and adhesives required for eyelash extensions may contain acrylic or latex."
+          showEyeQuestions
+        />
       </Step>
       <Step>
-        <Page3 />
+        <ConsentSignaturePage
+          {...props}
+          formName="eyelashExtensionForm"
+          formSelector={selectEyelashExtensionForm}
+          consentId="lashExtension"
+          consentField="lashExtConsent"
+          headerTitle="EYELASH EXTENSION"
+          agreementText="I have read and fully understand all information in this agreement. I consent to the agreement and to the eyelash extension application procedure."
+        />
       </Step>
       <Step>
         <ConfirmationPage />
