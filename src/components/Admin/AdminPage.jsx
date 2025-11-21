@@ -17,15 +17,15 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import LashLiftFormPdf from "../Forms/lashLift/LashLiftFormPdf";
-import LashExtFormPdf from "../Forms/lashExt/LashFormPdf";
-import MenuHeader from "../../common/MenuHeader";
 import { formatServiceName } from "../Forms/FormFunctions";
-
+import MenuHeader from "../../common/MenuHeader";
 import FormModal from "./FormModal";
 import FormViewRenderer from "./FormViewRenderer";
-import ThreadingWaxingPdf from "../Forms/threadingWaxing/ThreadingWaxingPdf";
 import BrowShapingPdf from "../Forms/browShaping/BrowShapingPdf";
+import BrowLaminationPdf from "../Forms/browLamination/BrowLaminationPdf";
+import LashLiftFormPdf from "../Forms/lashLift/LashLiftFormPdf";
+import LashExtFormPdf from "../Forms/lashExt/LashFormPdf";
+import ThreadingWaxingPdf from "../Forms/threadingWaxing/ThreadingWaxingPdf";
 
 const AdminPage = () => {
   const [groupedForms, setGroupedForms] = useState({});
@@ -76,6 +76,9 @@ const AdminPage = () => {
       let Component;
 
       switch (form.service) {
+        case "browLaminationForm":
+          Component = <BrowLaminationPdf formData={form.formData} />;
+          break;
         case "browShapingForm":
           Component = <BrowShapingPdf formData={form.formData} />;
           break;

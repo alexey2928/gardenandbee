@@ -2,29 +2,34 @@ import React, { useCallback, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import SignatureCanvas from "react-signature-canvas";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearForm,
-  savePageData,
-  selectBrowShapingForm,
-} from "../../../store/slices/formsSlice";
-import FormNavButtons from "../../../common/FormNavButtons";
-import FormHeader from "../../../common/FormHeader";
-import { REGEX_INITIALS } from "../FormFunctions";
-import { submitForm } from "../../../services/submitForm";
-import { selectConsents } from "../../../store/slices/consentsSlice";
 import { CircularProgress } from "@mui/material";
+import FormHeader from "../../common/FormHeader";
+import FormNavButtons from "../../common/FormNavButtons";
+import { REGEX_INITIALS } from "./FormFunctions";
+import { clearForm, savePageData } from "../../store/slices/formsSlice";
+import { submitForm } from "../../services/submitForm";
+import { selectConsents } from "../../store/slices/consentsSlice";
 
-const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
+const ConsentSignaturePage = ({
+  currentStep,
+  goToPreviousPage,
+  goToNextPage,
+  formName,
+  formSelector,
+  consentId,
+  consentField,
+  headerTitle,
+  agreementText,
+  pageName = "Consent + Liability",
+}) => {
   const dispatch = useDispatch();
-
-  const formData = useSelector(selectBrowShapingForm);
+  const formData = useSelector(formSelector);
   const consents = useSelector(selectConsents);
-  const browShapingConsents =
-    consents?.find((item) => item.id === "browShaping")?.browShapingConsent ||
-    [];
+
+  const serviceConsents =
+    consents?.find((item) => item.id === consentId)?.[consentField] || [];
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const sigRef = useRef();
 
   const {
@@ -55,10 +60,12 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
       day: "numeric",
     });
   }, []);
+
   const submissionMemoDate = useMemo(
     () => getFormattedDate(),
     [getFormattedDate]
   );
+
   const onSubmit = async (data) => {
     if (isSubmitting) return;
     if (!validateSignature()) return;
@@ -66,39 +73,38 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
     setIsSubmitting(true);
     const signatureDataUrl = sigRef.current.toDataURL();
 
-    // Save data to Redux
     dispatch(
       savePageData({
-        formName: "browShapingForm",
+        formName,
         page: "page3",
         data: {
           ...data,
-          consents: browShapingConsents,
+          consents: serviceConsents,
           signature: signatureDataUrl,
         },
       })
     );
 
-    // Combine all form data
     const fullFormData = {
       ...formData,
       page3: {
         ...data,
-        consents: browShapingConsents,
+        consents: serviceConsents,
         signature: signatureDataUrl,
         submissionDate: getFormattedDate(),
       },
     };
+
     try {
-      await submitForm("browShapingForm", fullFormData);
+      await submitForm(formName, fullFormData);
       reset();
       sigRef.current?.clear();
-      dispatch(clearForm({ formName: "browShapingForm" }));
+      dispatch(clearForm({ formName }));
       goToNextPage({ success: true });
     } catch (error) {
       reset();
       sigRef.current?.clear();
-      dispatch(clearForm({ formName: "browShapingForm" }));
+      dispatch(clearForm({ formName }));
       goToNextPage({ success: false });
     } finally {
       setIsSubmitting(false);
@@ -115,21 +121,18 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
 
   return (
     <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow">
-      {/* Loading overlay */}
       {isSubmitting && (
         <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-20">
           <CircularProgress />
         </div>
       )}
-      {/* Header */}
-      <FormHeader title="BROW SHAPING + TINT" pageName="Consent + Liability" />
+      <FormHeader title={headerTitle} pageName={pageName} />
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
         <div className="p-4 space-y-4">
-          {/* Consent Text */}
           <div className="p-4 border rounded bg-gray-50 h-64 overflow-y-scroll text-sm">
             <ul className="ml-2 list-disc flex flex-col">
-              {browShapingConsents.length > 0 ? (
-                browShapingConsents.map((consent, index) => (
+              {serviceConsents.length > 0 ? (
+                serviceConsents.map((consent, index) => (
                   <li key={index}>{consent}</li>
                 ))
               ) : (
@@ -138,7 +141,6 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
             </ul>
           </div>
 
-          {/* Agreement Checkbox */}
           <div className="mt-4">
             <div className="flex items-center gap-2 ">
               <input
@@ -147,9 +149,7 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
                 {...register("agree", { required: "Consent is required." })}
               />
               <label htmlFor="agree" className="text-sm">
-                I have read and fully understand all information in this
-                agreement. I consent to the agreement and to the brow shaping
-                procedure.
+                {agreementText}
               </label>
             </div>
             {errors.agree && (
@@ -192,7 +192,6 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
             </div>
           </div>
 
-          {/* Signature */}
           <p className="mt-2 italic text-sm">
             By signing below, you agree to the following: I have completed this
             form truthfully and to the best of my knowledge. I agree to inform
@@ -228,7 +227,6 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
             )}
           </div>
 
-          {/* Buttons */}
           <div className="space-y-4 lg:space-x-4 lg:space-y-0 flex flex-col lg:flex-row w-full mt-4">
             <button
               type="button"
@@ -239,7 +237,6 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
             </button>
           </div>
         </div>
-        {/* Navigation buttons */}
         <FormNavButtons
           currentStep={currentStep}
           goToPreviousPage={goToPreviousPage}
@@ -249,4 +246,4 @@ const Page3 = ({ currentStep, goToPreviousPage, goToNextPage }) => {
   );
 };
 
-export default Page3;
+export default ConsentSignaturePage;
